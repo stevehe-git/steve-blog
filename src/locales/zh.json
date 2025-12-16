@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "主页",
+    "works": "作品",
+    "articles": "文章",
+    "education": "教育",
+    "contact": "联系"
+  },
+  "hero": {
+    "articlesTitle": "文章",
+    "articlesDesc": "个人思考、学习分享与生活记录。",
+    "homeTitle": "你好，我是博客",
+    "homeDesc": "记录创作、学习与生活方式的个人站点。",
+    "worksTitle": "作品",
+    "worksDesc": "作品集与正在进行的创作，后续补充。",
+    "educationTitle": "教育",
+    "educationDesc": "课程、教学与分享内容，敬请期待。",
+    "contactTitle": "联系",
+    "contactDesc": "如需合作或交流，将在此放置社交与邮箱信息。"
+  },
+  "actions": {
+    "sortByTime": "时间排序"
+  },
+  "meta": {
+    "readOnWechat": "微信阅读"
+  },
+  "filter": {
+    "category": "分类"
+  },
+  "articles": {
+    "count": "{count} 篇文章"
+  },
+  "categories": {
+    "all": "全部",
+    "dit": "DiT | 数媒与课程",
+    "luna": "LUNA | 影像相关",
+    "note": "暗叽be叽 | 杂记",
+    "art": "After8 | 聊艺术",
+    "travel": "山海疗养院 | 游记"
+  },
+  "search": {
+    "placeholder": "搜索文章标题、内容、标签...",
+    "results": "搜索 \"{query}\" 的结果",
+    "noResults": "未找到相关文章"
+  },
+  "article": {
+    "new": "新建文章",
+    "edit": "编辑",
+    "createTitle": "发布新文章",
+    "createDesc": "填写文章信息，支持 Markdown 格式",
+    "editTitle": "编辑文章",
+    "editDesc": "修改文章内容和信息",
+    "title": "标题",
+    "titlePlaceholder": "请输入文章标题",
+    "description": "描述",
+    "descriptionPlaceholder": "请输入文章简短描述",
+    "category": "分类",
+    "tag": "标签",
+    "tagPlaceholder": "请输入标签",
+    "date": "发布日期",
+    "platform": "发布平台",
+    "platformPlaceholder": "如：微信、博客等",
+    "badge": "徽章",
+    "badgePlaceholder": "可选，如：Beta、1.0 等",
+    "cover": "封面",
+    "coverPlaceholder": "CSS 渐变或图片 URL",
+    "coverPresets": "封面预设",
+    "content": "正文",
+    "contentPlaceholder": "支持 Markdown 格式",
+    "contentHint": "支持 Markdown 语法：标题、列表、代码块、引用等",
+    "publish": "发布",
+    "update": "更新",
+    "cancel": "取消",
+    "saving": "保存中..."
+  }
+}
+

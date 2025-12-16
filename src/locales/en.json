@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Home",
+    "works": "Works",
+    "articles": "Articles",
+    "education": "Education",
+    "contact": "Contact"
+  },
+  "hero": {
+    "articlesTitle": "Articles",
+    "articlesDesc": "Personal thoughts, learning notes, and life log.",
+    "homeTitle": "Hi, I'm Blog",
+    "homeDesc": "A personal site for creativity, learning, and lifestyle notes.",
+    "worksTitle": "Works",
+    "worksDesc": "Portfolio and ongoing creations, to be updated soon.",
+    "educationTitle": "Education",
+    "educationDesc": "Courses, teaching materials, and sharing — coming soon.",
+    "contactTitle": "Contact",
+    "contactDesc": "Collaboration and communication info will be placed here."
+  },
+  "actions": {
+    "sortByTime": "Sort by time"
+  },
+  "meta": {
+    "readOnWechat": "Read on WeChat"
+  },
+  "filter": {
+    "category": "Categories"
+  },
+  "articles": {
+    "count": "{count} articles"
+  },
+  "categories": {
+    "all": "All",
+    "dit": "DiT | Media & Course",
+    "luna": "LUNA | Imaging",
+    "note": "Notes & Misc",
+    "art": "After8 | Art Talk",
+    "travel": "Shanhai Clinic | Travel"
+  },
+  "search": {
+    "placeholder": "Search articles by title, content, tags...",
+    "results": "Results for \"{query}\"",
+    "noResults": "No articles found"
+  },
+  "article": {
+    "new": "New Article",
+    "edit": "Edit",
+    "createTitle": "Create New Article",
+    "createDesc": "Fill in article information, Markdown format supported",
+    "editTitle": "Edit Article",
+    "editDesc": "Modify article content and information",
+    "title": "Title",
+    "titlePlaceholder": "Enter article title",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter a brief description",
+    "category": "Category",
+    "tag": "Tag",
+    "tagPlaceholder": "Enter tag",
+    "date": "Publish Date",
+    "platform": "Platform",
+    "platformPlaceholder": "e.g., WeChat, Blog",
+    "badge": "Badge",
+    "badgePlaceholder": "Optional, e.g., Beta, 1.0",
+    "cover": "Cover",
+    "coverPlaceholder": "CSS gradient or image URL",
+    "coverPresets": "Cover Presets",
+    "content": "Content",
+    "contentPlaceholder": "Markdown format supported",
+    "contentHint": "Supports Markdown: headings, lists, code blocks, quotes, etc.",
+    "publish": "Publish",
+    "update": "Update",
+    "cancel": "Cancel",
+    "saving": "Saving..."
+  }
+}
+
