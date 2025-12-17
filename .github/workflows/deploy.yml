@@ -1,0 +1,44 @@
+# 工作流名称
+name: Deploy Vue3 to GitHub Pages
+
+# 触发条件：推送到 main 分支（可改为你的分支名，如 master）
+on:
+  push:
+    branches: [ main ]
+
+# 工作流任务
+jobs:
+  deploy:
+    # 运行环境
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取仓库代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 安装 Node.js（指定版本，建议 20+）
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm' # 缓存 npm 依赖，加速构建
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: npm install
+
+      # 4. 构建生产环境包
+      - name: Build project
+        run: npm run build
+
+      # 5. 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          # GitHub 自动生成的令牌（无需手动配置）
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 构建产物目录（Vue CLI 是 dist，Vite 也是 dist，确认项目实际输出目录）
+          publish_dir: ./dist
+          # 部署到 gh-pages 分支（GitHub Pages 默认读取该分支）
+          publish_branch: gh-pages
