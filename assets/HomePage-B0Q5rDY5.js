@@ -1,0 +1,1 @@
+import{d as a,u as n,c,a as e,t as s,b as t,o as r}from"./vue-vendor-BLy7Ta_u.js";const l={class:"layout"},_={class:"hero"},p=a({__name:"HomePage",setup(i){const{t:o}=n();return(m,u)=>(r(),c("main",l,[e("section",_,[e("h1",null,s(t(o)("hero.homeTitle")),1),e("p",null,s(t(o)("hero.homeDesc")),1)])]))}});export{p as default};

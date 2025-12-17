@@ -1,0 +1,1 @@
+import{d as a,u as n,c,a as e,t as o,b as s,o as r}from"./vue-vendor-BLy7Ta_u.js";const l={class:"layout"},_={class:"hero"},m=a({__name:"ContactPage",setup(i){const{t}=n();return(u,p)=>(r(),c("main",l,[e("section",_,[e("h1",null,o(s(t)("hero.contactTitle")),1),e("p",null,o(s(t)("hero.contactDesc")),1)])]))}});export{m as default};
