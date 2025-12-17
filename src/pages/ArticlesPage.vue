@@ -104,11 +104,6 @@ const toggleSort = () => {
 
 <template>
   <main class="layout">
-    <section class="hero">
-      <h1>{{ t('hero.articlesTitle') }}</h1>
-      <p>{{ t('hero.articlesDesc') }}</p>
-    </section>
-
     <section class="content">
       <aside class="sidebar">
         <div class="filter-title">

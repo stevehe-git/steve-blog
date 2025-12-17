@@ -7,14 +7,8 @@
     "contact": "联系"
   },
   "hero": {
-    "articlesTitle": "文章",
-    "articlesDesc": "个人思考、学习分享与生活记录。",
     "homeTitle": "你好，我是博客",
     "homeDesc": "记录创作、学习与生活方式的个人站点。",
-    "worksTitle": "作品",
-    "worksDesc": "作品集与正在进行的创作，后续补充。",
-    "educationTitle": "教育",
-    "educationDesc": "课程、教学与分享内容，敬请期待。",
     "contactTitle": "联系",
     "contactDesc": "如需合作或交流，将在此放置社交与邮箱信息。"
   },

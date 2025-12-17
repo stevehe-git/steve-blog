@@ -7,14 +7,8 @@
     "contact": "Contact"
   },
   "hero": {
-    "articlesTitle": "Articles",
-    "articlesDesc": "Personal thoughts, learning notes, and life log.",
     "homeTitle": "Hi, I'm Blog",
     "homeDesc": "A personal site for creativity, learning, and lifestyle notes.",
-    "worksTitle": "Works",
-    "worksDesc": "Portfolio and ongoing creations, to be updated soon.",
-    "educationTitle": "Education",
-    "educationDesc": "Courses, teaching materials, and sharing — coming soon.",
     "contactTitle": "Contact",
     "contactDesc": "Collaboration and communication info will be placed here."
   },
