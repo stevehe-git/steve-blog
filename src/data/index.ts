@@ -55,7 +55,7 @@ export async function initializeArticles(): Promise<void> {
  * @param id 文章 ID
  * @returns 文章对象，如果不存在则返回 undefined
  */
-export const getArticleById = (id: number): Article | undefined => {
+export const getArticleById = (id: string): Article | undefined => {
   return articles.find((item) => item.id === id)
 }
 

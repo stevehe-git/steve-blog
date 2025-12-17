@@ -43,7 +43,7 @@ const { searchQuery, searchResults, highlightedResults } = useArticleSearch(arti
  * 跳转到文章详情页
  * @param id 文章 ID
  */
-const goDetail = (id: number) => {
+const goDetail = (id: string) => {
   router.push({ name: 'articleDetail', params: { id } })
 }
 

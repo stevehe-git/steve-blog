@@ -19,7 +19,7 @@ const isEditMode = computed(() => !!route.params.id)
 // 文章 ID（编辑模式下使用）
 const articleId = computed(() => {
   const id = route.params.id
-  return id ? Number(id) : null
+  return id ? (id as string) : null
 })
 
 // 文章编辑器（表单管理、提交等）

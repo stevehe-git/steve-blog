@@ -26,8 +26,8 @@ const { loadComments, getComments, addComment } = useArticleComments()
  * 当前文章（根据路由参数获取）
  */
 const article = computed(() => {
-  const id = Number(route.params.id)
-  return Number.isFinite(id) ? getArticleById(id) ?? null : null
+  const id = route.params.id as string
+  return id ? getArticleById(id) ?? null : null
 })
 
 // 文章内容（Markdown 格式）

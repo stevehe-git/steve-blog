@@ -3,6 +3,7 @@
  * 从 content 目录加载所有 .md 文件并转换为文章格式
  */
 
+import { nanoid } from 'nanoid'
 import type { Article } from '@/data/types'
 import {
   parseFrontmatter,
@@ -14,13 +15,11 @@ import {
  * 从 Markdown 文件内容转换为 Article
  * @param filename 文件名
  * @param content 文件内容
- * @param baseId 基础 ID（用于生成唯一 ID）
  * @returns Article 对象
  */
 export function markdownToArticle(
   filename: string,
-  content: string,
-  baseId: number
+  content: string
 ): Article {
   const { frontmatter, body } = parseFrontmatter(content)
   const fileInfo = extractInfoFromFilename(filename)
@@ -49,7 +48,7 @@ export function markdownToArticle(
     'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
 
   return {
-    id: baseId,
+    id: nanoid(),
     title,
     description,
     content: body.trim(),
@@ -64,11 +63,10 @@ export function markdownToArticle(
 
 /**
  * 加载所有 Markdown 文件
- * 使用 import.meta.glob 从 public/content 读取
+ * 使用 import.meta.glob 从 content 目录读取
  */
 export async function loadMarkdownArticles(): Promise<Article[]> {
   const articles: Article[] = []
-  let baseId = 10000 // 从较大的 ID 开始，避免与现有文章冲突
 
   try {
     // 使用 import.meta.glob 从 content 目录读取
@@ -86,8 +84,7 @@ export async function loadMarkdownArticles(): Promise<Article[]> {
             const filename = path.split('/').pop() || 'unknown.md'
             const article = markdownToArticle(
               filename,
-              content as string,
-              baseId++
+              content as string
             )
             return article
           } catch (error) {

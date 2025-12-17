@@ -4,6 +4,7 @@
  * 提供文章的 CRUD 操作和本地存储功能
  */
 
+import { nanoid } from 'nanoid'
 import type { Article } from './types'
 
 // 通知合并列表更新的回调函数
@@ -23,7 +24,7 @@ const STORAGE_KEY = 'blog-articles'
 // 默认文章数据
 const defaultArticles: Article[] = [
   {
-    id: 1,
+    id: 'default-1',
     title: 'Md2Design：更简单、更美观的图文卡片生成器',
     description: '轻量卡片设计工具，简化信息展示流程，适合日常分享与快速传递。',
     content: `# 背景
@@ -47,7 +48,7 @@ const defaultArticles: Article[] = [
       'linear-gradient(135deg, #0a0f26 0%, #0c1a4d 35%, #032c5f 65%, #0c1a4d 100%)'
   },
   {
-    id: 2,
+    id: 'default-2',
     title: '个人网站已上线：感谢Gemini3，这是第一版个人网站',
     description: '第一版上线，用以记录思考与灵感，后续将持续完善功能与体验。',
     content: `# 上线笔记
@@ -70,7 +71,7 @@ const defaultArticles: Article[] = [
     cover: 'linear-gradient(135deg, #0d121f 0%, #132642 50%, #243c5a 100%)'
   },
   {
-    id: 3,
+    id: 'default-3',
     title: '暗叽be叽：杂记与灵感收集',
     description: '关于创作与生活的片段记录，聚合了近期的灵感、思考与待办。',
     content: `# 写在前面
@@ -136,10 +137,9 @@ export const dataArticles: Article[] = loadArticlesFromStorage()
  * @returns 创建的文章对象
  */
 export const createArticle = (articleData: Omit<Article, 'id'>): Article => {
-  // 生成新的 ID（当前最大 ID + 1）
-  const newId = dataArticles.length > 0 ? Math.max(...dataArticles.map((a) => a.id)) + 1 : 1
+  // 使用 nanoid 生成新的 ID
   const newArticle: Article = {
-    id: newId,
+    id: nanoid(),
     ...articleData
   }
   dataArticles.push(newArticle)
@@ -157,7 +157,7 @@ export const createArticle = (articleData: Omit<Article, 'id'>): Article => {
  * @returns 更新后的文章对象
  * @throws 如果文章不存在则抛出错误
  */
-export const updateArticle = (id: number, articleData: Partial<Article>): Article => {
+export const updateArticle = (id: string, articleData: Partial<Article>): Article => {
   const index = dataArticles.findIndex((item) => item.id === id)
   if (index === -1) {
     throw new Error(`Article with id ${id} not found`)
@@ -180,7 +180,7 @@ export const updateArticle = (id: number, articleData: Partial<Article>): Articl
  * @param id 文章 ID
  * @returns 是否删除成功
  */
-export const deleteArticle = (id: number): boolean => {
+export const deleteArticle = (id: string): boolean => {
   const index = dataArticles.findIndex((item) => item.id === id)
   if (index === -1) {
     return false

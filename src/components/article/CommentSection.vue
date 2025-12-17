@@ -12,7 +12,7 @@ type CommentForm = {
 
 const props = defineProps<{
   comments: CommentItem[]
-  articleId: number
+  articleId: string
 }>()
 
 const emit = defineEmits<{

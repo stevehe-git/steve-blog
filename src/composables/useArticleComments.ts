@@ -22,7 +22,7 @@ export type CommentItem = {
  */
 export const useArticleComments = (storageKey = 'article-comments') => {
   // 评论映射：文章 ID -> 评论列表
-  const commentsMap = ref<Record<number, CommentItem[]>>({})
+  const commentsMap = ref<Record<string, CommentItem[]>>({})
 
   /**
    * 从 localStorage 加载评论数据
@@ -48,7 +48,7 @@ export const useArticleComments = (storageKey = 'article-comments') => {
    * @param articleId 文章 ID
    * @returns 评论列表，如果文章没有评论则返回空数组
    */
-  const getComments = (articleId: number) => commentsMap.value[articleId] ?? []
+  const getComments = (articleId: string) => commentsMap.value[articleId] ?? []
 
   /**
    * 为指定文章添加评论
@@ -57,7 +57,7 @@ export const useArticleComments = (storageKey = 'article-comments') => {
    * @returns 新创建的评论对象
    */
   // 完整函数
-  const addComment = (articleId: number, payload: { author?: string; content: string }) => {
+  const addComment = (articleId: string, payload: { author?: string; content: string }) => {
     // 1. 内容校验：去除首尾空格，空内容直接返回
     const content = payload.content.trim()
     if (!content) return
