@@ -5,6 +5,8 @@
 
 > 🌐 **在线访问**: [https://stevehe-git.github.io/steve-blog/](https://stevehe-git.github.io/steve-blog/)
 
+> ⭐ **如果这个项目对你有帮助，请帮忙点个 Star 支持一下！**
+
 一个基于 Vue 3 + TypeScript + Vite 构建的现代化个人博客网站，支持多语言国际化、Markdown 文章渲染、评论功能、主题切换等特性，旨在为个人提供简洁、高效的博客展示平台。
 
 ## ✨ 核心特性
@@ -438,6 +440,12 @@ steve-blog/
 ├── content/              # Markdown 文章文件目录
 │   ├── example.md        # 示例文章
 │   └── example1.md        # 示例文章
+├── image/                # 项目效果截图目录
+│   ├── home.png          # 首页效果截图
+│   ├── articles.png      # 文章列表页效果截图
+│   ├── detail.png        # 文章详情页效果截图
+│   ├── edit.png          # 文章编辑页效果截图
+│   └── contact.png       # 联系页效果截图
 ├── public/               # 静态资源（不会被Vite处理）
 │   ├── 404.html          # 404错误页面
 │   └── blog.svg          # 网站图标
