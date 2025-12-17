@@ -44,6 +44,6 @@ jobs:
           # GitHub 自动生成的令牌（无需手动配置）
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # 构建产物目录（Vue CLI 是 dist，Vite 也是 dist，确认项目实际输出目录）
-          publish_dir: ./
+          publish_dir: ./dist
           # 部署到 gh-pages 分支（GitHub Pages 默认读取该分支）
           publish_branch: gh-pages

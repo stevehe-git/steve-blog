@@ -12,8 +12,6 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'dist', // 构建输出目录（默认 dist，无需修改）
-    emptyOutDir: true, // 构建前清空 dist
     rollupOptions: {
       output: {
         manualChunks: {
