@@ -10,7 +10,57 @@
     "homeTitle": "Hi, I'm Blog",
     "homeDesc": "A personal site for creativity, learning, and lifestyle notes.",
     "contactTitle": "Contact",
-    "contactDesc": "Collaboration and communication info will be placed here."
+    "contactDesc": "Collaboration and communication info will be placed here.",
+    "name": "He Jiaxiong",
+    "title": "Embedded Linux Application Software Engineer",
+    "subtitle": "6 years of embedded system development experience, focused on C/C++ software development in Linux environment",
+    "greeting": "Hi, I'm",
+    "intro": "Focused on embedded system development, familiar with the entire process from requirements analysis to product implementation"
+  },
+  "home": {
+    "skills": "Knowledge Framework",
+    "programming": "Programming Languages",
+    "software": "Software Applications",
+    "protocols": "Communication Protocols",
+    "tools": "Toolchain",
+    "aiTools": "AI Tools",
+    "projects": "Work Projects",
+    "education": "Education Background",
+    "contact": "Contact Information",
+    "phone": "Phone",
+    "email": "Email",
+    "experience": "years experience",
+    "projectRole": "Role",
+    "projectSource": "Source",
+    "workContent": "Work Content",
+    "master": "Master",
+    "bachelor": "Bachelor",
+    "major": "Major",
+    "degree": "Degree",
+    "university1": "Wuhan University of Technology",
+    "university2": "Wuhan Polytechnic University",
+    "majorName": "Vehicle Engineering (Professional Master)",
+    "project1": {
+      "name": "Intelligent Robot Pushing Material Project",
+      "period": "2020.03-2022.06",
+      "company": "Fengjiang Intelligent Technology Co., Ltd.",
+      "role": "Core Member",
+      "desc": "Software refactoring, visual module algorithm integration, network communication module development"
+    },
+    "project2": {
+      "name": "Smart Oven Project",
+      "period": "2022.06-2022.08",
+      "company": "Hisense Smart Life",
+      "role": "Core Member",
+      "desc": "Qt/Qml-based smart oven UI development"
+    },
+    "project3": {
+      "name": "Small Lawnmower Project",
+      "period": "2022.08-Present",
+      "company": "Fengjiang Intelligent Technology Co., Ltd.",
+      "role": "Project SE",
+      "desc": "Responsible for software design and construction, integrating algorithms, positioning/mapping, planning modules"
+    }
   },
   "actions": {
     "sortByTime": "Sort by time"

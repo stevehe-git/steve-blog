@@ -10,7 +10,57 @@
     "homeTitle": "你好，我是博客",
     "homeDesc": "记录创作、学习与生活方式的个人站点。",
     "contactTitle": "联系",
-    "contactDesc": "如需合作或交流，将在此放置社交与邮箱信息。"
+    "contactDesc": "如需合作或交流，将在此放置社交与邮箱信息。",
+    "name": "何嘉雄",
+    "title": "嵌入式 Linux 应用软件工程师",
+    "subtitle": "6年嵌入式系统开发经验，专注于Linux环境下C/C++软件开发",
+    "greeting": "你好，我是",
+    "intro": "专注于嵌入式系统开发，熟悉从需求分析到产品落地的全流程"
+  },
+  "home": {
+    "skills": "技能框架",
+    "programming": "编程语言",
+    "software": "软件应用",
+    "protocols": "通信协议",
+    "tools": "工具链",
+    "aiTools": "AI工具",
+    "projects": "项目经验",
+    "education": "教育背景",
+    "contact": "联系方式",
+    "phone": "电话",
+    "email": "邮箱",
+    "experience": "年经验",
+    "projectRole": "项目角色",
+    "projectSource": "项目来源",
+    "workContent": "工作内容",
+    "master": "硕士",
+    "bachelor": "本科",
+    "major": "专业",
+    "degree": "学历",
+    "university1": "武汉理工大学",
+    "university2": "武汉轻工大学",
+    "majorName": "车辆工程（专硕）",
+    "project1": {
+      "name": "智能机器人推料项目",
+      "period": "2020.03-2022.06",
+      "company": "丰疆智能科技股份有限公司",
+      "role": "项目骨干成员",
+      "desc": "软件重构、视觉模块算法集成、网络通信模块开发"
+    },
+    "project2": {
+      "name": "智能烤箱项目",
+      "period": "2022.06-2022.08",
+      "company": "海信智慧生活",
+      "role": "项目骨干成员",
+      "desc": "基于Qt/Qml的智能烤箱UI开发"
+    },
+    "project3": {
+      "name": "小割草机项目",
+      "period": "2022.08-至今",
+      "company": "丰疆智能科技股份有限公司",
+      "role": "项目SE",
+      "desc": "负责整个项目的软件设计与构建，集成算法、定位/建图、规划等模块"
+    }
   },
   "actions": {
     "sortByTime": "时间排序"
