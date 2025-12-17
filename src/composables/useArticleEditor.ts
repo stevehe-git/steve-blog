@@ -7,7 +7,6 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { nanoid } from 'nanoid'
 import type { Article } from '@/data/types'
-import { createArticle, updateArticle } from '@/data'
 import { contentArticles } from '@/data/contentArticles'
 import { articleToMarkdown, generateFilename } from '@/utils/markdownExporter'
 
@@ -162,6 +161,7 @@ export const useArticleEditor = () => {
   /**
    * 提交表单（创建或更新文章）
    * @returns 保存的文章对象，如果验证失败则返回 null
+   * @deprecated 此函数已废弃，请使用 handlePublish 或 handleUpdate
    */
   const handleSubmit = async (): Promise<Article | null> => {
     const errors = validateForm()
@@ -169,20 +169,20 @@ export const useArticleEditor = () => {
       return null
     }
 
-    isSubmitting.value = true
-    try {
-      let savedArticle: Article
-      if (form.id) {
-        // 编辑模式
-        savedArticle = updateArticle(form.id, form as Article)
-      } else {
-        // 新建模式
-        savedArticle = createArticle(form as Omit<Article, 'id'>)
-      }
-      return savedArticle
-    } finally {
-      isSubmitting.value = false
+    // 返回表单数据作为文章对象（不保存到内存）
+    const article: Article = {
+      id: form.id || nanoid(),
+      title: form.title || '',
+      description: form.description || '',
+      content: form.content || '',
+      categoryKey: form.categoryKey || 'dit',
+      tag: form.tag || '',
+      badge: form.badge,
+      date: (form.date || new Date().toISOString().split('T')[0]) as string,
+      platform: (form.platform || 'Wechat') as string,
+      cover: form.cover || ''
     }
+    return article
   }
 
   /**
@@ -338,16 +338,7 @@ export const useArticleEditor = () => {
         throw new Error('无法获取文件句柄')
       }
 
-      // 如果文章来自 dataArticles（localStorage），才更新内存中的数据
-      // 如果来自 contentArticles（Markdown 文件），不需要更新，因为文件已经更新了
-      if (!isArticleFromContent(form.id)) {
-        try {
-          updateArticle(form.id, article)
-        } catch (error: any) {
-          // 如果更新失败（文章不存在），只记录警告，不影响文件保存
-          console.warn('Failed to update article in memory:', error)
-        }
-      }
+      // 文件已更新，无需更新内存中的数据
 
       return true
     } catch (error: any) {
