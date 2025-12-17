@@ -7,7 +7,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { articles } from '@/data/articles'
+import { articles } from '@/data'
 import { useArticleSearch } from '@/composables/useArticleSearch'
 
 const { t } = useI18n()

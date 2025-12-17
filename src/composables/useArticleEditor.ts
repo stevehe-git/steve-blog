@@ -5,8 +5,8 @@
 
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import type { Article } from '@/data/articles'
-import { createArticle, updateArticle } from '@/data/articles'
+import type { Article } from '@/data/types'
+import { createArticle, updateArticle } from '@/data'
 
 /**
  * 验证错误信息类型

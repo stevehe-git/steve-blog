@@ -7,6 +7,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import router from './router'
 import i18n from './i18n'
+import { initializeArticles } from './data'
 import './style.css'
 import App from './App.vue'
 
@@ -20,6 +21,11 @@ const pinia = createPinia()
 app.use(pinia)
 app.use(router)
 app.use(i18n)
+
+// 初始化文章系统（从 public/content 目录加载 Markdown 文件）
+initializeArticles().catch((error) => {
+  console.error('Failed to initialize articles:', error)
+})
 
 // 挂载应用到 DOM
 app.mount('#app')

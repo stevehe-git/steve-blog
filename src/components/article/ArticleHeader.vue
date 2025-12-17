@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import type { Article } from '@/data/articles'
+import type { Article } from '@/data/types'
 
 defineProps<{
   article: Article | null

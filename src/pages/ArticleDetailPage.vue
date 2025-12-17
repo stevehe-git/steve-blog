@@ -7,7 +7,7 @@
 import { computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { articles, getArticleById } from '@/data/articles'
+import { articles, getArticleById } from '@/data'
 import { useArticleMarkdown } from '@/composables/useArticleMarkdown'
 import { useArticleComments } from '@/composables/useArticleComments'
 import ArticleHeader from '@/components/article/ArticleHeader.vue'

@@ -7,7 +7,7 @@
 import { onMounted, computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { getArticleById } from '@/data/articles'
+import { getArticleById } from '@/data'
 import { useArticleEditor, type ValidationError } from '@/composables/useArticleEditor'
 
 const route = useRoute()

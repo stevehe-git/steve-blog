@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, watch, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { Article } from '@/data/articles'
+import type { Article } from '@/data/types'
 // 导入样式
 import 'highlight.js/styles/github-dark.css'
 import 'katex/dist/katex.min.css'

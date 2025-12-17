@@ -1,22 +1,20 @@
 /**
- * 文章数据管理模块
+ * 数据文章管理模块
+ * 处理从 localStorage 和默认数据加载的文章
  * 提供文章的 CRUD 操作和本地存储功能
  */
 
+import type { Article } from './types'
+
+// 通知合并列表更新的回调函数
+let onDataArticlesChanged: (() => void) | null = null
+
 /**
- * 文章类型定义
+ * 设置数据文章变化回调
+ * @param callback 回调函数
  */
-export type Article = {
-  id: number // 文章唯一标识
-  title: string // 文章标题
-  description: string // 文章描述
-  content: string // Markdown 格式的文章内容
-  categoryKey: string // 文章分类键（dit, luna, note, art, travel）
-  tag: string // 文章标签
-  badge?: string // 可选徽章（如 "Beta", "New" 等）
-  date: string // 发布日期（YYYY-MM-DD 格式）
-  platform: string // 发布平台
-  cover: string // 封面背景（CSS 渐变或图片 URL）
+export function setDataArticlesChangedCallback(callback: () => void) {
+  onDataArticlesChanged = callback
 }
 
 // localStorage 存储键名
@@ -129,15 +127,8 @@ const saveArticlesToStorage = (articles: Article[]) => {
   }
 }
 
-// 初始化文章数组（从 localStorage 加载或使用默认数据）
-export const articles: Article[] = loadArticlesFromStorage()
-
-/**
- * 根据 ID 获取文章
- * @param id 文章 ID
- * @returns 文章对象，如果不存在则返回 undefined
- */
-export const getArticleById = (id: number) => articles.find((item) => item.id === id)
+// 数据文章数组（从 localStorage 加载或使用默认数据）
+export const dataArticles: Article[] = loadArticlesFromStorage()
 
 /**
  * 创建新文章
@@ -146,14 +137,16 @@ export const getArticleById = (id: number) => articles.find((item) => item.id ==
  */
 export const createArticle = (articleData: Omit<Article, 'id'>): Article => {
   // 生成新的 ID（当前最大 ID + 1）
-  const newId = articles.length > 0 ? Math.max(...articles.map((a) => a.id)) + 1 : 1
+  const newId = dataArticles.length > 0 ? Math.max(...dataArticles.map((a) => a.id)) + 1 : 1
   const newArticle: Article = {
     id: newId,
     ...articleData
   }
-  articles.push(newArticle)
+  dataArticles.push(newArticle)
   // 保存到 localStorage
-  saveArticlesToStorage(articles)
+  saveArticlesToStorage(dataArticles)
+  // 通知合并列表更新
+  onDataArticlesChanged?.()
   return newArticle
 }
 
@@ -165,18 +158,20 @@ export const createArticle = (articleData: Omit<Article, 'id'>): Article => {
  * @throws 如果文章不存在则抛出错误
  */
 export const updateArticle = (id: number, articleData: Partial<Article>): Article => {
-  const index = articles.findIndex((item) => item.id === id)
+  const index = dataArticles.findIndex((item) => item.id === id)
   if (index === -1) {
     throw new Error(`Article with id ${id} not found`)
   }
   const updatedArticle: Article = {
-    ...articles[index],
+    ...dataArticles[index],
     ...articleData,
     id // 确保 ID 不被覆盖
   } as Article
-  articles[index] = updatedArticle
+  dataArticles[index] = updatedArticle
   // 保存到 localStorage
-  saveArticlesToStorage(articles)
+  saveArticlesToStorage(dataArticles)
+  // 通知合并列表更新
+  onDataArticlesChanged?.()
   return updatedArticle
 }
 
@@ -186,23 +181,27 @@ export const updateArticle = (id: number, articleData: Partial<Article>): Articl
  * @returns 是否删除成功
  */
 export const deleteArticle = (id: number): boolean => {
-  const index = articles.findIndex((item) => item.id === id)
+  const index = dataArticles.findIndex((item) => item.id === id)
   if (index === -1) {
     return false
   }
-  articles.splice(index, 1)
+  dataArticles.splice(index, 1)
   // 保存到 localStorage
-  saveArticlesToStorage(articles)
+  saveArticlesToStorage(dataArticles)
+  // 通知合并列表更新
+  onDataArticlesChanged?.()
   return true
 }
 
 /**
  * 重新加载文章数据（用于从其他地方更新后同步）
- * 从 localStorage 重新加载数据并更新内存中的 articles 数组
+ * 从 localStorage 重新加载数据并更新内存中的 dataArticles 数组
  */
-export const reloadArticles = () => {
+export const reloadDataArticles = () => {
   const loaded = loadArticlesFromStorage()
-  articles.length = 0
-  articles.push(...loaded)
+  dataArticles.length = 0
+  dataArticles.push(...loaded)
+  // 通知合并列表更新
+  onDataArticlesChanged?.()
 }
 

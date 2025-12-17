@@ -4,7 +4,7 @@
  */
 
 import { computed, ref } from 'vue'
-import type { Article } from '@/data/articles'
+import type { Article } from '@/data/types'
 
 /**
  * 文章搜索 Composable
