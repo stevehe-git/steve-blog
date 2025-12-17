@@ -22,17 +22,17 @@
 
 | 技术 | 版本 | 说明 |
 |:--------|:-------------|:---------------------|
-| Vue | 3.4+ | 核心前端框架，基于 Composition API 构建 |
-| TypeScript | 5.0+ | 类型安全开发，提升代码可维护性与可读性 |
-| Vite | 5.0+ | 下一代构建工具，实现快速热更新与优化构建 |
-| Pinia | 2.1+ | Vue 官方状态管理库，替代 Vuex，简化状态管理 |
-| Vue Router | 4.2+ | 路由管理，支持动态路由、路由守卫与权限控制 |
-| vue-i18n | 9.8+ | 国际化解决方案，支持语言切换、占位符插值、复数处理 |
+| Vue | 3.5+ | 核心前端框架，基于 Composition API 构建 |
+| TypeScript | 5.9+ | 类型安全开发，提升代码可维护性与可读性 |
+| Vite | 7.2+ | 下一代构建工具，实现快速热更新与优化构建 |
+| Pinia | 3.0+ | Vue 官方状态管理库，替代 Vuex，简化状态管理 |
+| Vue Router | 4.6+ | 路由管理，支持动态路由、路由守卫与权限控制 |
+| vue-i18n | 9.14+ | 国际化解决方案，支持语言切换、占位符插值、复数处理 |
 | markdown-it | 14.1+ | Markdown 解析器，支持插件扩展，用于文章内容渲染 |
 | highlight.js | 11.10+ | 代码语法高亮库，支持多种编程语言，集成到 markdown-it 中 |
-| katex | latest | LaTeX 数学公式渲染库，快速、轻量级，支持行内和块级公式 |
-| mermaid | latest | 图表和流程图渲染库，支持流程图、时序图、类图等多种图表类型 |
-| flowchart.js | latest | 流程图渲染库，支持简单的流程图绘制 |
+| katex | 0.16+ | LaTeX 数学公式渲染库，快速、轻量级，支持行内和块级公式 |
+| mermaid | 11.12+ | 图表和流程图渲染库，支持流程图、时序图、类图等多种图表类型 |
+| flowchart.js | 1.18+ | 流程图渲染库，支持简单的流程图绘制 |
 
 ## 🚀 快速开始
 
@@ -97,11 +97,7 @@ pnpm preview
 
 ### 文章管理
 
-项目支持两种文章来源：
-
-#### 1. Markdown 文件文章（推荐）
-
-将 Markdown 文件放在项目根目录的 `content/` 目录下，系统会自动加载并显示。
+项目使用 Markdown 文件作为文章来源，将 Markdown 文件放在项目根目录的 `content/` 目录下，系统会自动加载并显示。
 
 **文件格式：**
 
@@ -128,12 +124,12 @@ cover: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
 
 - `title`: 文章标题（可选，如未提供则从文件名提取）
 - `description`: 文章描述（可选，如未提供则从内容第一段提取）
-- `categoryKey`: 文章分类（dit, luna, note, art, travel），默认：dit
+- `categoryKey`: 文章分类（从国际化配置动态加载，如 `c/c++`, `linux`, `ROS`, `中间件`, `apollo` 等），默认：`c/c++`
 - `tag`: 文章标签
 - `badge`: 可选徽章（如 "Beta", "New" 等）
 - `date`: 发布日期（YYYY-MM-DD 格式，可选，如未提供则从文件名提取或使用当前日期）
 - `platform`: 发布平台，默认：Wechat
-- `cover`: 封面背景（CSS 渐变或图片 URL）
+- `cover`: 封面背景（支持 CSS 渐变如 `linear-gradient(...)` 或图片 URL/base64 如 `data:image/...`）
 
 **文件名格式：**
 
@@ -149,33 +145,15 @@ cover: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
 - ✅ 按日期自动排序（最新的在前）
 - ✅ 构建时自动打包到构建产物中
 - ✅ 构建时自动复制到 `dist/content` 目录
-
-#### 2. 数据文章（localStorage）
-
-文章数据存储在 `src/data/dataArticles.ts` 中，使用 localStorage 进行持久化存储。
-
-**文章字段：**
-
-- `id`: 文章唯一标识（自动生成）
-- `title`: 文章标题
-- `description`: 文章描述
-- `content`: Markdown 格式的文章内容
-- `categoryKey`: 文章分类（dit, luna, note, art, travel）
-- `tag`: 文章标签
-- `date`: 发布日期（YYYY-MM-DD 格式）
-- `platform`: 发布平台
-- `cover`: 封面背景（支持 CSS 渐变或图片 URL）
-- `badge`: 可选徽章（如 "Beta", "New" 等）
+- ✅ 支持封面图片上传（base64 格式）
+- ✅ 支持封面 CSS 渐变背景
+- ✅ 分类从国际化配置动态加载
 
 **文章操作：**
 
-- 创建文章：访问 `/articles/new` 或点击"新建文章"按钮
-- 编辑文章：在文章详情页点击"编辑"按钮，或访问 `/articles/:id/edit`
-- 删除文章：在文章列表页点击删除按钮（需确认）
-
-**文章优先级：**
-
-Markdown 文件中的文章优先级高于数据文章，会显示在列表前面。
+- 创建文章：访问 `/articles/new` 或点击"新建文章"按钮，创建后保存为 Markdown 文件
+- 编辑文章：在文章详情页点击"编辑"按钮，或访问 `/articles/:id/edit`，编辑后更新 Markdown 文件
+- 文章以 Markdown 文件形式存储在 `content/` 目录下
 
 ### Markdown 渲染
 
@@ -322,22 +300,28 @@ steve-blog/
 │   ├── assets/           # 静态资源（图片、样式、字体等，会被Vite处理）
 │   │   └── vue.svg       # Vue Logo
 │   ├── components/      # 通用组件
-│   │   └── article/      # 文章相关组件
-│   │       ├── ArticleHeader.vue      # 文章头部组件（标题、元信息、操作按钮）
-│   │       ├── ArticleContent.vue     # 文章内容组件（Markdown渲染、代码高亮）
-│   │       ├── ArticleTOC.vue         # 目录导航组件（自动生成目录）
-│   │       └── CommentSection.vue     # 评论区域组件（评论列表、添加评论）
+│   │   ├── article/      # 文章相关组件
+│   │   │   ├── ArticleHeader.vue      # 文章头部组件（标题、元信息、操作按钮）
+│   │   │   ├── ArticleContent.vue     # 文章内容组件（Markdown渲染、代码高亮）
+│   │   │   ├── ArticleTOC.vue         # 目录导航组件（自动生成目录）
+│   │   │   └── CommentSection.vue     # 评论区域组件（评论列表、添加评论）
+│   │   └── home/         # 首页相关组件
+│   │       ├── Section.vue           # 通用区块组件（带滚动动画）
+│   │       ├── Card.vue               # 通用卡片组件（支持多种动画类型）
+│   │       ├── SkillCategory.vue      # 技能分类组件
+│   │       ├── ProjectCard.vue        # 项目卡片组件
+│   │       └── EducationCard.vue       # 教育经历卡片组件
 │   ├── composables/      # 组合式函数（逻辑复用）
 │   │   ├── useArticleMarkdown.ts      # Markdown 解析逻辑
 │   │   ├── useArticleComments.ts      # 评论管理逻辑
 │   │   ├── useArticleEditor.ts        # 文章编辑逻辑（创建、更新、验证）
 │   │   ├── useArticleSearch.ts        # 文章搜索逻辑（全文搜索、高亮）
+│   │   ├── useCategories.ts           # 分类管理逻辑（从国际化配置动态加载）
 │   │   ├── useCodeCopy.ts             # 代码复制功能
 │   │   ├── useMermaidRenderer.ts      # Mermaid 图表渲染
 │   │   └── useFlowchartRenderer.ts    # Flowchart 流程图渲染
 │   ├── data/            # 数据文件
 │   │   ├── types.ts     # 文章类型定义
-│   │   ├── dataArticles.ts    # 数据文章管理（localStorage/默认数据）
 │   │   ├── contentArticles.ts # 内容文章管理（Markdown文件）
 │   │   └── index.ts     # 统一导出和合并接口
 │   ├── locales/         # 国际化语言文件
@@ -358,7 +342,9 @@ steve-blog/
 │   ├── utils/           # 工具函数
 │   │   ├── html.ts     # HTML转义工具（XSS防护）
 │   │   ├── frontmatter.ts  # Frontmatter 解析工具
-│   │   └── markdownLoader.ts  # Markdown 文件加载器
+│   │   ├── markdownLoader.ts  # Markdown 文件加载器
+│   │   ├── markdownExporter.ts  # Markdown 文件导出工具
+│   │   └── coverStyle.ts  # 封面样式工具（处理CSS渐变和图片）
 │   ├── App.vue          # 根组件（导航栏、路由视图、主题切换）
 │   ├── main.ts          # 入口文件（初始化Vue、路由、Pinia、i18n）
 │   ├── i18n.ts          # 国际化配置
@@ -479,11 +465,16 @@ steve-blog/
 - [x] LaTeX 数学公式支持
 - [x] Flowchart.js 流程图支持
 - [x] 文章搜索功能
-- [x] 文章编辑功能
+- [x] 文章编辑功能（创建和编辑 Markdown 文件）
 - [x] 响应式设计优化
 - [x] Markdown 文件自动加载（从 `content/` 目录）
 - [x] Frontmatter 解析支持
-- [x] 文章数据模块化（数据文章和内容文章分离）
+- [x] 封面图片上传支持（base64 格式）
+- [x] 封面 CSS 渐变背景支持
+- [x] 分类动态加载（从国际化配置）
+- [x] 首页动画效果（打字机、滚动触发、数字计数等）
+- [x] 组件化重构（使用 Slot 优化代码结构）
+- [x] 代码整理和优化（提取共享工具函数）
 
 ### 待实现功能
 
@@ -497,7 +488,7 @@ steve-blog/
 - [ ] 文章阅读时长统计
 - [ ] 文章草稿功能
 - [ ] 文章版本历史
-- [ ] 图片上传功能
+- [ ] 图片上传到云存储（当前支持 base64）
 - [ ] 文章导入/导出功能
 
 ## 🤝 贡献指南

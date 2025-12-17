@@ -157,11 +157,11 @@ onMounted(() => {
           />
           <SkillCategory
             :title="t('home.protocols')"
-            :skills="skills.protocols.map(name => ({ name }))"
+            :skills="skills.protocols.map((name: string) => ({ name }))"
           />
           <SkillCategory
             :title="t('home.tools')"
-            :skills="skills.tools.map(name => ({ name }))"
+            :skills="skills.tools.map((name: string) => ({ name }))"
           />
         </div>
       </template>
