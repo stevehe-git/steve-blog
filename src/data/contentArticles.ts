@@ -1,6 +1,6 @@
 /**
  * 内容文章管理模块
- * 处理从 src/content 目录加载的 Markdown 文件
+ * 处理从 content 目录加载的 Markdown 文件
  */
 
 import type { Article } from './types'
@@ -14,7 +14,7 @@ let markdownArticlesLoaded = false
 
 /**
  * 初始化并加载 Markdown 文件
- * 将 src/content 目录下的 .md 文件加载到内容文章列表中
+ * 将 content 目录下的 .md 文件加载到内容文章列表中
  */
 export async function initializeContentArticles(): Promise<void> {
   if (markdownArticlesLoaded) {
@@ -36,7 +36,7 @@ export async function initializeContentArticles(): Promise<void> {
         return dateB - dateA
       })
 
-      console.log(`Loaded ${markdownArticles.length} markdown articles from src/content`)
+      console.log(`Loaded ${markdownArticles.length} markdown articles from content`)
     }
 
     markdownArticlesLoaded = true

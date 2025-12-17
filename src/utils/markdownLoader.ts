@@ -1,6 +1,6 @@
 /**
  * Markdown 文件加载器
- * 从 src/content 目录加载所有 .md 文件并转换为文章格式
+ * 从 content 目录加载所有 .md 文件并转换为文章格式
  */
 
 import type { Article } from '@/data/types'
@@ -71,8 +71,8 @@ export async function loadMarkdownArticles(): Promise<Article[]> {
   let baseId = 10000 // 从较大的 ID 开始，避免与现有文章冲突
 
   try {
-    // 使用 import.meta.glob 从 src/content 读取
-    const markdownModules = import.meta.glob('/src/content/*.md', {
+    // 使用 import.meta.glob 从 content 目录读取
+    const markdownModules = import.meta.glob('/content/*.md', {
       query: '?raw',
       import: 'default',
       eager: false
