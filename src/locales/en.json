@@ -11,7 +11,7 @@
     "homeDesc": "A personal site for creativity, learning, and lifestyle notes.",
     "contactTitle": "Contact",
     "contactDesc": "Feel free to reach out through the following channels.",
-    "name": "He Jiaxiong",
+    "name": "Steve",
     "title": "Embedded Linux Application Software Engineer",
     "subtitle": "6 years of embedded system development experience, focused on C/C++ software development in Linux environment",
     "greeting": "Hi, I'm",
@@ -41,23 +41,20 @@
     "university2": "Wuhan Polytechnic University",
     "majorName": "Vehicle Engineering (Professional Master)",
     "project1": {
-      "name": "Intelligent Robot Pushing Material Project",
+      "name": "Intelligent Material Handling Robot Project",
       "period": "2020.03-2022.06",
-      "company": "Fengjiang Intelligent Technology Co., Ltd.",
       "role": "Core Member",
       "desc": "Software refactoring, visual module algorithm integration, network communication module development"
     },
     "project2": {
       "name": "Smart Oven Project",
       "period": "2022.06-2022.08",
-      "company": "Hisense Smart Life",
       "role": "Core Member",
       "desc": "Qt/Qml-based smart oven UI development"
     },
     "project3": {
-      "name": "Small Lawnmower Project",
+      "name": "Robot Car Project",
       "period": "2022.08-Present",
-      "company": "Fengjiang Intelligent Technology Co., Ltd.",
       "role": "Project SE",
       "desc": "Responsible for software design and construction, integrating algorithms, positioning/mapping, planning modules"
     }
