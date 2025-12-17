@@ -10,7 +10,7 @@
     "homeTitle": "Hi, I'm Blog",
     "homeDesc": "A personal site for creativity, learning, and lifestyle notes.",
     "contactTitle": "Contact",
-    "contactDesc": "Collaboration and communication info will be placed here.",
+    "contactDesc": "Feel free to reach out through the following channels.",
     "name": "He Jiaxiong",
     "title": "Embedded Linux Application Software Engineer",
     "subtitle": "6 years of embedded system development experience, focused on C/C++ software development in Linux environment",
@@ -80,9 +80,9 @@
     "design": "Design Mode",
     "linux": "Linux | Operating System",
     "ROS": "ROS | Robotics",
-    "中间件": "Middleware | Middleware",
+    "middleware": "Middleware | Middleware",
     "apollo": "Apollo | Autonomous Driving",
-    "markdown": "Markdown"
+    "markdown": "Markdown | Markdown"
   },
   "search": {
     "placeholder": "Search articles by title, content, tags...",
@@ -151,6 +151,23 @@
     "copied": "Copied!",
     "copyFailed": "Copy failed",
     "copyCode": "Copy code"
+  },
+  "contact": {
+    "phone": "Phone",
+    "phoneNumber": "13628661135",
+    "phoneLink": "tel:13628661135",
+    "email": "Email",
+    "emailAddress": "hejiaxiong94@foxmail.com",
+    "emailLink": "mailto:hejiaxiong94@foxmail.com",
+    "github": "GitHub",
+    "githubLabel": "View My GitHub",
+    "githubUsername": "steve-blog",
+    "githubUrl": "https://github.com/steve-blog",
+    "wechat": "WeChat Official Account",
+    "wechatAccount": "Scan QR Code",
+    "wechatUrl": "#",
+    "available": "Always Available",
+    "availableDesc": "I usually respond within 24 hours"
   }
 }
 

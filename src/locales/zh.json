@@ -10,7 +10,7 @@
     "homeTitle": "你好，我是博客",
     "homeDesc": "记录创作、学习与生活方式的个人站点。",
     "contactTitle": "联系",
-    "contactDesc": "如需合作或交流，将在此放置社交与邮箱信息。",
+    "contactDesc": "如需合作或交流，欢迎通过以下方式联系我。",
     "name": "何嘉雄",
     "title": "嵌入式 Linux 应用软件工程师",
     "subtitle": "6年嵌入式系统开发经验，专注于Linux环境下C/C++软件开发",
@@ -77,12 +77,12 @@
   "categories": {
     "all": "全部",
     "c/c++": "C/C++ | 编程语言",
-    "设计模式": "设计模式 | 设计模式",
+    "设计模式": "Design Mode | 设计模式",
     "linux": "Linux | 操作系统",
     "ROS": "ROS | 机器人",
     "中间件": "中间件 | 中间件",
     "apollo": "Apollo | 自动驾驶",
-    "markdown": "Markdown"
+    "markdown": "Markdown | 标记语言"
   },
   "search": {
     "placeholder": "搜索文章标题、内容、标签...",
@@ -151,6 +151,23 @@
     "copied": "已复制!",
     "copyFailed": "复制失败",
     "copyCode": "复制代码"
+  },
+  "contact": {
+    "phone": "电话",
+    "phoneNumber": "13628661135",
+    "phoneLink": "tel:13628661135",
+    "email": "邮箱",
+    "emailAddress": "hejiaxiong94@foxmail.com",
+    "emailLink": "mailto:hejiaxiong94@foxmail.com",
+    "github": "GitHub",
+    "githubLabel": "查看我的 GitHub",
+    "githubUsername": "steve-blog",
+    "githubUrl": "https://github.com/steve-blog",
+    "wechat": "微信公众号",
+    "wechatAccount": "扫码关注",
+    "wechatUrl": "#",
+    "available": "随时欢迎联系",
+    "availableDesc": "我通常会在24小时内回复您的消息"
   }
 }
 
