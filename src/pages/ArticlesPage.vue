@@ -110,6 +110,8 @@ const toggleSort = () => {
           <span class="filter-icon">⌘</span>
           <span>{{ t('filter.category') }}</span>
         </div>
+
+        <!-- 左侧分类列表按钮 -->
         <div class="category-list">
           <button
             v-for="category in categories"
@@ -125,6 +127,7 @@ const toggleSort = () => {
       </aside>
 
       <section class="article-area">
+        <!-- 文章搜索框 -->
         <div class="search-section">
           <div class="search-box">
             <span class="search-icon">🔍</span>
@@ -162,7 +165,8 @@ const toggleSort = () => {
             </button>
           </div>
         </div>
-
+        
+        <!-- 文章列表 -->
         <div class="articles">
           <article
             v-for="item in displayArticles"
@@ -173,24 +177,33 @@ const toggleSort = () => {
             @click="goDetail(item.id)"
             @keyup.enter="goDetail(item.id)"
           >
+            <!-- 文章徽章 -->
             <div class="card-cover" :style="{ background: item.cover }">
               <span v-if="item.badge" class="badge">{{ item.badge }}</span>
             </div>
+
             <div class="card-body">
+              <!-- 文章标签 -->
               <div class="tag-row">
                 <span class="tag">{{ item.tag }}</span>
               </div>
+              <!-- 文章标题 -->
               <span
                 class="title"
                 v-html="(item as any).highlightedTitle || item.title"
               ></span>
+              <!-- 文章描述 -->
               <p
                 class="description"
                 v-html="(item as any).highlightedDescription || item.description"
               ></p>
+              <!-- 文章元信息 -->
               <div class="meta">
+                <!-- 文章日期 -->
                 <span>{{ item.date }}</span>
+                <!-- 点分隔符 -->
                 <span class="dot">·</span>
+                <!-- 文章平台 -->
                 <span>{{ item.platform }}</span>
               </div>
             </div>
