@@ -23,7 +23,16 @@ const articleId = computed(() => {
 })
 
 // 文章编辑器（表单管理、提交等）
-const { form, isSubmitting, loadArticle, validateForm, handleSubmitAndRedirect, resetForm } = useArticleEditor()
+const { 
+  form, 
+  isSubmitting, 
+  isSavingFile,
+  loadArticle, 
+  validateForm, 
+  resetForm,
+  handlePublish,
+  handleUpdate
+} = useArticleEditor()
 
 // 验证错误信息
 const validationErrors = ref<ValidationError[]>([])
@@ -115,10 +124,29 @@ const handleSubmit = async () => {
     return
   }
   
-  // 验证通过，清除错误提示并提交
+  // 验证通过，清除错误提示
   validationErrors.value = []
   showErrors.value = false
-  await handleSubmitAndRedirect()
+  
+  // 根据模式执行不同的操作
+  if (isEditMode.value && articleId.value) {
+    // 编辑模式：更新 Markdown 文件
+    const success = await handleUpdate()
+    if (success) {
+      // 更新成功，重新加载文章列表以确保数据同步
+      const { reloadArticles } = await import('@/data')
+      await reloadArticles()
+      // 跳转到文章详情页（ID 现在是基于文件名生成的稳定 ID）
+      router.push({ name: 'articleDetail', params: { id: articleId.value } })
+    }
+  } else {
+    // 新建模式：发布 Markdown 文件
+    const success = await handlePublish()
+    if (success) {
+      // 发布成功，跳转到文章列表
+      router.push({ name: 'articles' })
+    }
+  }
 }
 </script>
 
@@ -276,8 +304,8 @@ const handleSubmit = async () => {
           <button type="button" class="cancel-btn" @click="handleCancel">
             {{ t('article.cancel') }}
           </button>
-          <button type="submit" class="submit-btn" :disabled="isSubmitting">
-            {{ isSubmitting ? t('article.saving') : isEditMode ? t('article.update') : t('article.publish') }}
+          <button type="submit" class="submit-btn" :disabled="isSubmitting || isSavingFile">
+            {{ isSavingFile ? t('article.saving') : isSubmitting ? t('article.saving') : isEditMode ? t('article.update') : t('article.publish') }}
           </button>
         </div>
       </form>

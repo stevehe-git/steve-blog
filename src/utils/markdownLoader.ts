@@ -3,13 +3,35 @@
  * 从 content 目录加载所有 .md 文件并转换为文章格式
  */
 
-import { nanoid } from 'nanoid'
 import type { Article } from '@/data/types'
 import {
   parseFrontmatter,
   extractInfoFromFilename,
   extractDescription
 } from './frontmatter'
+
+/**
+ * 基于文件名生成稳定的 ID
+ * 使用简单的哈希算法，确保同一文件每次加载时 ID 保持一致
+ * @param filename 文件名
+ * @returns 稳定的 ID
+ */
+function generateStableId(filename: string): string {
+  // 移除文件扩展名
+  const nameWithoutExt = filename.replace(/\.md$/, '')
+  
+  // 简单的哈希函数
+  let hash = 0
+  for (let i = 0; i < nameWithoutExt.length; i++) {
+    const char = nameWithoutExt.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash // 转换为 32 位整数
+  }
+  
+  // 转换为正数并添加前缀
+  const positiveHash = Math.abs(hash).toString(36)
+  return `md-${positiveHash}`
+}
 
 /**
  * 从 Markdown 文件内容转换为 Article
@@ -48,7 +70,7 @@ export function markdownToArticle(
     'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
 
   return {
-    id: nanoid(),
+    id: generateStableId(filename),
     title,
     description,
     content: body.trim(),
