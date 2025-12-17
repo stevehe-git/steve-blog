@@ -16,7 +16,7 @@ const n=`# Content 目录
 ---
 title: 文章标题
 description: 文章描述
-categoryKey: dit
+categoryKey: Markdown
 tag: DiT
 badge: Beta
 date: 2025-12-12

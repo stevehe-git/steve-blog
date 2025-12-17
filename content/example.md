@@ -1,9 +1,9 @@
 ---
 title: 示例文章
 description: 这是一篇示例文章，展示如何使用 Markdown 文件
-categoryKey: note
-tag: 示例
-badge: New
+categoryKey: Markdown
+tag: Markdown示例,样式
+badge: Markdown
 date: 2025-12-16
 platform: Wechat
 cover: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
