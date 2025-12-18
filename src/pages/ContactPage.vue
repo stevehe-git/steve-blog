@@ -146,11 +146,11 @@ onMounted(() => {
 /* Hero Section */
 .hero-section {
   position: relative;
-  min-height: 50vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 28px 60px;
+  padding: 80px 28px;
   overflow: hidden;
   /* 默认可见，确保即使动画失败也能显示 */
   opacity: 1;
@@ -488,8 +488,8 @@ onMounted(() => {
 /* Responsive */
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 40vh;
-    padding: 80px 20px 40px;
+    min-height: 60vh;
+    padding: 60px 20px;
   }
 
   .contact-grid {
