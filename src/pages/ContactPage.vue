@@ -139,20 +139,18 @@ onMounted(() => {
 /* Hero Section */
 .hero-section {
   position: relative;
-  min-height: 50vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 28px 60px;
+  padding: 80px 28px;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.8s ease;
 }
 
 .hero-section.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .hero-content {
@@ -259,13 +257,11 @@ onMounted(() => {
   max-width: 1000px;
   margin: 0 auto;
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  transition: opacity 0.8s ease 0.2s;
 }
 
 .contact-section.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .contact-grid {
@@ -288,14 +284,14 @@ onMounted(() => {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
   opacity: 0;
-  transform: translateY(20px) scale(0.95);
+  transform: scale(0.95);
   animation: card-pop-in 0.6s ease forwards;
 }
 
 @keyframes card-pop-in {
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: scale(1);
   }
 }
 
@@ -382,13 +378,11 @@ onMounted(() => {
   max-width: 1000px;
   margin: 0 auto;
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  transition: opacity 0.8s ease 0.4s;
 }
 
 .info-section.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .info-card {
@@ -439,8 +433,8 @@ onMounted(() => {
 /* Responsive */
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 40vh;
-    padding: 80px 20px 40px;
+    min-height: 60vh;
+    padding: 60px 20px;
   }
 
   .contact-grid {
