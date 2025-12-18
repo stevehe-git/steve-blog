@@ -19,7 +19,9 @@ const i18n = createI18n({
   messages: {
     zh,
     en
-  }
+  },
+  // 禁用链接格式解析，避免 mailto: 和 tel: 格式错误
+  warnHtmlMessage: false
 })
 
 export default i18n
