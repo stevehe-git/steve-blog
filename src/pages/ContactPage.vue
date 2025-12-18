@@ -9,13 +9,13 @@ const isVisible = ref(true)
 const mousePosition = ref({ x: 0, y: 0 })
 
 // 联系方式数据（使用 computed 使其响应语言切换）
-// 注意：链接直接写在代码中，避免 vue-i18n 解析 mailto: 和 tel: 格式
+// 注意：链接、邮箱地址和电话号码直接写在代码中，避免 vue-i18n 解析特殊格式
 const contactMethods = computed(() => [
   {
     id: 'phone',
     icon: '📱',
     label: t('contact.phone'),
-    value: t('contact.phoneNumber'),
+    value: '13628661135', // 直接使用，避免 i18n 解析
     link: 'tel:13628661135', // 直接使用，避免 i18n 解析
     color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
   },
@@ -23,7 +23,7 @@ const contactMethods = computed(() => [
     id: 'email',
     icon: '✉️',
     label: t('contact.email'),
-    value: t('contact.emailAddress'),
+    value: 'hejiaxiong94@foxmail.com', // 直接使用，避免 i18n 解析 @ 符号
     link: 'mailto:hejiaxiong94@foxmail.com', // 直接使用，避免 i18n 解析
     color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
   },

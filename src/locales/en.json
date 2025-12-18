@@ -155,12 +155,9 @@
   },
   "contact": {
     "phone": "Phone",
-    "phoneNumber": "13628661135",
     "email": "Email",
-    "emailAddress": "hejiaxiong94@foxmail.com",
     "github": "GitHub",
     "githubLabel": "View My GitHub",
-    "githubUsername": "steve-blog",
     "wechat": "WeChat Official Account",
     "wechatAccount": "Scan QR Code",
     "available": "Always Available",

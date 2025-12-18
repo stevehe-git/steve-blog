@@ -155,12 +155,9 @@
   },
   "contact": {
     "phone": "电话",
-    "phoneNumber": "13628661135",
     "email": "邮箱",
-    "emailAddress": "hejiaxiong94@foxmail.com",
     "github": "GitHub",
     "githubLabel": "查看我的 GitHub",
-    "githubUsername": "steve-blog",
     "wechat": "微信公众号",
     "wechatAccount": "扫码关注",
     "available": "随时欢迎联系",
