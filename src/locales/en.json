@@ -156,18 +156,11 @@
   },
   "contact": {
     "phone": "Phone",
-    "phoneNumber": "13628661135",
-    "phoneLink": "tel:13628661135",
     "email": "Email",
-    "emailAddress": "hejiaxiong94@foxmail.com",
-    "emailLink": "mailto:hejiaxiong94@foxmail.com",
     "github": "GitHub",
     "githubLabel": "View My GitHub",
-    "githubUsername": "steve-blog",
-    "githubUrl": "https://github.com/steve-blog",
     "wechat": "WeChat Official Account",
     "wechatAccount": "Scan QR Code",
-    "wechatUrl": "#",
     "available": "Always Available",
     "availableDesc": "I usually respond within 24 hours"
   }

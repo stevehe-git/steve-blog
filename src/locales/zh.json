@@ -156,18 +156,11 @@
   },
   "contact": {
     "phone": "电话",
-    "phoneNumber": "13628661135",
-    "phoneLink": "tel:13628661135",
     "email": "邮箱",
-    "emailAddress": "hejiaxiong94@foxmail.com",
-    "emailLink": "mailto:hejiaxiong94@foxmail.com",
     "github": "GitHub",
     "githubLabel": "查看我的 GitHub",
-    "githubUsername": "steve-blog",
-    "githubUrl": "https://github.com/steve-blog",
     "wechat": "微信公众号",
     "wechatAccount": "扫码关注",
-    "wechatUrl": "#",
     "available": "随时欢迎联系",
     "availableDesc": "我通常会在24小时内回复您的消息"
   }

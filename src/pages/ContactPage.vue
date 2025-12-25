@@ -1,29 +1,30 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, nextTick } from 'vue'
 
 const { t } = useI18n()
 
-// 动画状态
-const isVisible = ref(false)
+// 动画状态 - 默认设为 true，确保元素可见
+const isVisible = ref(true)
 const mousePosition = ref({ x: 0, y: 0 })
 
 // 联系方式数据（使用 computed 使其响应语言切换）
+// 注意：链接、邮箱地址和电话号码直接写在代码中，避免 vue-i18n 解析特殊格式
 const contactMethods = computed(() => [
   {
     id: 'phone',
     icon: '📱',
     label: t('contact.phone'),
-    value: t('contact.phoneNumber'),
-    link: t('contact.phoneLink'),
+    value: '13628661135', // 直接使用，避免 i18n 解析
+    link: 'tel:13628661135', // 直接使用，避免 i18n 解析
     color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
   },
   {
     id: 'email',
     icon: '✉️',
     label: t('contact.email'),
-    value: t('contact.emailAddress'),
-    link: t('contact.emailLink'),
+    value: 'hejiaxiong94@foxmail.com', // 直接使用，避免 i18n 解析 @ 符号
+    link: 'mailto:hejiaxiong94@foxmail.com', // 直接使用，避免 i18n 解析
     color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
   },
   {
@@ -31,7 +32,7 @@ const contactMethods = computed(() => [
     icon: '💻',
     label: t('contact.github'),
     value: t('contact.githubLabel'),
-    link: t('contact.githubUrl'),
+    link: 'https://github.com/steve-blog', // 直接使用，避免 i18n 解析
     color: 'linear-gradient(135deg, #24292e 0%, #586069 100%)',
     external: true
   },
@@ -40,14 +41,20 @@ const contactMethods = computed(() => [
     icon: '💬',
     label: t('contact.wechat'),
     value: t('contact.wechatAccount'),
-    link: t('contact.wechatUrl'),
+    link: '#', // 直接使用，避免 i18n 解析
     color: 'linear-gradient(135deg, #07c160 0%, #06ad56 100%)',
     external: true
   }
 ])
 
 onMounted(() => {
-  // 渐入动画
+  // 渐入动画 - 使用 nextTick 确保 DOM 已渲染
+  nextTick(() => {
+    // 立即设置为可见，确保元素显示
+    isVisible.value = true
+  })
+
+  // 备用方案：如果 nextTick 失败，延迟设置
   setTimeout(() => {
     isVisible.value = true
   }, 100)
@@ -145,12 +152,23 @@ onMounted(() => {
   justify-content: center;
   padding: 80px 28px;
   overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.8s ease;
+  /* 默认可见，确保即使动画失败也能显示 */
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.hero-section.visible {
-  opacity: 1;
+/* 动画前状态（仅在支持动画时应用） */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-section {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .hero-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-content {
@@ -256,12 +274,23 @@ onMounted(() => {
   padding: 60px 28px;
   max-width: 1000px;
   margin: 0 auto;
-  opacity: 0;
-  transition: opacity 0.8s ease 0.2s;
+  /* 默认可见，确保即使动画失败也能显示 */
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
 }
 
-.contact-section.visible {
-  opacity: 1;
+/* 动画前状态（仅在支持动画时应用） */
+@media (prefers-reduced-motion: no-preference) {
+  .contact-section {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .contact-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .contact-grid {
@@ -283,15 +312,30 @@ onMounted(() => {
   color: var(--text-primary);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
-  opacity: 0;
-  transform: scale(0.95);
+  /* 默认可见，确保即使动画失败也能显示 */
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  /* 动画增强 */
   animation: card-pop-in 0.6s ease forwards;
+  will-change: transform, opacity;
+}
+
+/* 动画前状态（仅在支持动画时应用） */
+@media (prefers-reduced-motion: no-preference) {
+  .contact-card {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
 }
 
 @keyframes card-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -377,12 +421,23 @@ onMounted(() => {
   padding: 60px 28px;
   max-width: 1000px;
   margin: 0 auto;
-  opacity: 0;
-  transition: opacity 0.8s ease 0.4s;
+  /* 默认可见，确保即使动画失败也能显示 */
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
 }
 
-.info-section.visible {
-  opacity: 1;
+/* 动画前状态（仅在支持动画时应用） */
+@media (prefers-reduced-motion: no-preference) {
+  .info-section {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .info-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .info-card {
