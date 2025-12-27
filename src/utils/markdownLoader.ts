@@ -4,6 +4,7 @@
  */
 
 import type { Article } from '@/data/types'
+import { v4 as uuidv4 } from 'uuid'
 import {
   parseFrontmatter,
   extractInfoFromFilename,
@@ -72,8 +73,13 @@ export function markdownToArticle(
     frontmatter.cover ||
     'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
 
+  // 优先使用 frontmatter 中的 articleId，如果没有则生成新的 UUID
+  const articleId = (frontmatter.articleId && typeof frontmatter.articleId === 'string') 
+    ? frontmatter.articleId 
+    : uuidv4()
+
   return {
-    id: generateStableId(filename),
+    id: articleId,
     title,
     description,
     content: body.trim(),

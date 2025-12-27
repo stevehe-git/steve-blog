@@ -3,7 +3,7 @@
  */
 
 export type Article = {
-  id: string // 文章唯一标识（使用 nanoid 生成）
+  id: string // 文章唯一标识（使用 UUID 生成）
   title: string // 文章标题
   description: string // 文章描述
   content: string // Markdown 格式的文章内容

@@ -7,10 +7,10 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { nanoid } from 'nanoid'
+import { v4 as uuidv4 } from 'uuid'
 import type { Article } from '@/data/types'
 import { contentArticles } from '@/data/contentArticles'
 import { articleToMarkdown, generateFilename } from '@/utils/markdownExporter'
-import { generateStableId } from '@/utils/markdownLoader'
 
 /**
  * 验证错误信息类型
@@ -272,16 +272,17 @@ export const useArticleEditor = () => {
       // 获取用户实际选择的文件名
       const actualFilename = fileHandle.name
       
-      // 转换为 Markdown（包含文件名信息）
-      const markdown = articleToMarkdown(article, actualFilename)
+      // 生成 UUID 作为文章 ID（新建文章时）
+      const articleId = article.id || uuidv4()
+      article.id = articleId
+      
+      // 转换为 Markdown（包含 articleId 信息）
+      const markdown = articleToMarkdown(article)
       
       // 写入文件
       const writable = await fileHandle.createWritable()
       await writable.write(markdown)
       await writable.close()
-
-      // 基于文件名生成稳定的文章ID（与加载时使用的ID一致）
-      const articleId = generateStableId(actualFilename)
       
       // 保存文件句柄映射和文件名（用于删除时查找）
       fileHandleMap.set(articleId, fileHandle)
@@ -378,8 +379,13 @@ export const useArticleEditor = () => {
         }
       }
 
-      // 转换为 Markdown（包含文件名信息）
-      const markdown = articleToMarkdown(article, actualFilename)
+      // 确保文章有 ID（编辑模式使用现有 ID）
+      if (!article.id) {
+        article.id = uuidv4()
+      }
+      
+      // 转换为 Markdown（包含 articleId 信息）
+      const markdown = articleToMarkdown(article)
 
       // 写入文件
       if (fileHandle) {
@@ -387,7 +393,7 @@ export const useArticleEditor = () => {
         await writable.write(markdown)
         await writable.close()
         // 更新文件名映射（确保文件名信息是最新的）
-        saveFileHandle(form.id, actualFilename)
+        saveFileHandle(article.id, actualFilename)
       } else {
         throw new Error('无法获取文件句柄')
       }

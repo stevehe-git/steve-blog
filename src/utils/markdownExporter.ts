@@ -8,10 +8,9 @@ import type { Article } from '@/data/types'
 /**
  * 将 Article 转换为 Markdown 格式
  * @param article 文章对象
- * @param filename 文件名（可选，用于保存到 frontmatter）
  * @returns Markdown 格式的字符串
  */
-export function articleToMarkdown(article: Article, filename?: string): string {
+export function articleToMarkdown(article: Article): string {
   // 构建 frontmatter
   const frontmatter: string[] = []
   
@@ -47,9 +46,9 @@ export function articleToMarkdown(article: Article, filename?: string): string {
     frontmatter.push(`cover: ${escapeYamlValue(article.cover)}`)
   }
   
-  // 保存文件名到 frontmatter，用于删除时查找
-  if (filename) {
-    frontmatter.push(`filename: ${escapeYamlValue(filename)}`)
+  // 保存 articleId 到 frontmatter，用于删除时查找
+  if (article.id) {
+    frontmatter.push(`articleId: ${escapeYamlValue(article.id)}`)
   }
   
   // 组合 frontmatter 和内容
