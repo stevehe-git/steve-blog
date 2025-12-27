@@ -1,0 +1,13 @@
+const e=`---
+title: 2
+description: 2
+categoryKey: c/c++
+tag: 2
+badge: 2
+date: 2025-12-27
+platform: Wechat
+cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+filename: 2025-12-27-2.md
+---
+
+2`;export{e as default};

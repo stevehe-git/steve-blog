@@ -7,6 +7,7 @@ badge: linux
 date: 2025-12-27
 platform: Wechat
 cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+filename: 2025-12-27-swap.md
 ---
 
 # 本机环境

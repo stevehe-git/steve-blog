@@ -7,6 +7,7 @@ badge: markdown
 date: 2025-12-22
 platform: Wechat
 cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+filename: 2025-12-22-markdown.md
 ---
 
 # Markdown基本语法
