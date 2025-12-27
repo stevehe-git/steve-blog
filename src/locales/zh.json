@@ -87,6 +87,10 @@
     "results": "搜索 \"{query}\" 的结果",
     "noResults": "未找到相关文章"
   },
+  "pagination": {
+    "prev": "上一页",
+    "next": "下一页"
+  },
   "article": {
     "new": "新建文章",
     "edit": "编辑",

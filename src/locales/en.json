@@ -87,6 +87,10 @@
     "results": "Results for \"{query}\"",
     "noResults": "No articles found"
   },
+  "pagination": {
+    "prev": "Previous",
+    "next": "Next"
+  },
   "article": {
     "new": "New Article",
     "edit": "Edit",

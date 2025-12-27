@@ -4,13 +4,14 @@
  * 功能：文章列表展示、分类筛选、搜索、排序、新建文章
  */
 
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { articles } from '@/data'
 import { useArticleSearch } from '@/composables/useArticleSearch'
 import { useCategories } from '@/composables/useCategories'
 import { getCoverStyle } from '@/utils/coverStyle'
+import Pagination from '@/components/Pagination.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -25,6 +26,10 @@ const sortDesc = ref(true)
 
 // 搜索功能
 const { searchQuery, searchResults, highlightedResults } = useArticleSearch(articles)
+
+// 分页功能
+const itemsPerPage = ref(1) // 每页显示的文章数量
+const currentPage = ref(1) // 当前页码
 
 /**
  * 跳转到文章详情页
@@ -67,18 +72,49 @@ const filteredArticles = computed(() => {
  */
 const displayArticles = computed(() => {
   const query = searchQuery.value.trim()
-  if (!query) return filteredArticles.value
+  let articles = filteredArticles.value
+  
+  if (query) {
+    articles = articles.map((article) => {
+      const highlighted = highlightedResults.value.find((item) => item.id === article.id)
+      return highlighted
+        ? {
+            ...article,
+            highlightedTitle: highlighted.highlightedTitle,
+            highlightedDescription: highlighted.highlightedDescription
+          }
+        : article
+    })
+  }
+  
+  return articles
+})
 
-  return filteredArticles.value.map((article) => {
-    const highlighted = highlightedResults.value.find((item) => item.id === article.id)
-    return highlighted
-      ? {
-          ...article,
-          highlightedTitle: highlighted.highlightedTitle,
-          highlightedDescription: highlighted.highlightedDescription
-        }
-      : article
-  })
+/**
+ * 分页后的文章列表
+ */
+const paginatedArticles = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  return displayArticles.value.slice(start, end)
+})
+
+/**
+ * 总页数
+ */
+const totalPages = computed(() => {
+  return Math.ceil(displayArticles.value.length / itemsPerPage.value)
+})
+
+
+// 当筛选条件改变时，重置到第一页
+const resetPage = () => {
+  currentPage.value = 1
+}
+
+// 监听搜索条件变化，重置到第一页
+watch([searchQuery, selectedCategory, sortDesc], () => {
+  resetPage()
 })
 
 /**
@@ -86,6 +122,7 @@ const displayArticles = computed(() => {
  */
 const toggleSort = () => {
   sortDesc.value = !sortDesc.value
+  resetPage()
 }
 </script>
 
@@ -106,7 +143,7 @@ const toggleSort = () => {
             class="category-item"
             :class="{ active: selectedCategory === category.key }"
             type="button"
-            @click="selectedCategory = category.key"
+            @click="selectedCategory = category.key; resetPage()"
           >
             {{ category.label }}
           </button>
@@ -156,7 +193,7 @@ const toggleSort = () => {
         <!-- 文章列表 -->
         <div class="articles">
           <article
-            v-for="item in displayArticles"
+            v-for="item in paginatedArticles"
             :key="item.id"
             class="article-card"
             role="button"
@@ -202,6 +239,12 @@ const toggleSort = () => {
             <p>{{ t('search.noResults') }}</p>
           </div>
         </div>
+
+        <!-- 分页控件 -->
+        <Pagination
+          v-model:current-page="currentPage"
+          :total-pages="totalPages"
+        />
       </section>
     </section>
   </main>
