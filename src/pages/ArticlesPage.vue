@@ -52,6 +52,9 @@ const { searchQuery, searchResults, highlightedResults } = useArticleSearch(arti
 const itemsPerPage = ref(5) // 每页显示的文章数量，默认5个
 const currentPage = ref(1) // 当前页码
 
+// 视图模式：'list' 列表视图，'timeline' 时间轴视图
+const viewMode = ref<'list' | 'timeline'>('list')
+
 /**
  * 跳转到文章详情页
  * @param id 文章 ID
@@ -145,6 +148,37 @@ const toggleSort = () => {
   sortDesc.value = !sortDesc.value
   resetPage()
 }
+
+/**
+ * 切换视图模式
+ */
+const toggleViewMode = () => {
+  viewMode.value = viewMode.value === 'list' ? 'timeline' : 'list'
+  resetPage()
+}
+
+/**
+ * 按年份分组的文章列表（用于时间轴视图）
+ */
+const articlesByYear = computed(() => {
+  const grouped: Record<string, typeof filteredArticles.value> = {}
+  
+  filteredArticles.value.forEach((article) => {
+    const year = new Date(article.date).getFullYear().toString()
+    if (!grouped[year]) {
+      grouped[year] = []
+    }
+    grouped[year].push(article)
+  })
+  
+  // 按年份降序排序
+  const sortedYears = Object.keys(grouped).sort((a, b) => Number(b) - Number(a))
+  
+  return sortedYears.map((year) => ({
+    year,
+    articles: grouped[year]
+  }))
+})
 </script>
 
 <template>
@@ -202,6 +236,10 @@ const toggleSort = () => {
             </span>
           </div>
           <div class="header-actions">
+            <button class="view-toggle-btn" type="button" @click="toggleViewMode" :title="viewMode === 'list' ? t('actions.timelineView') : t('actions.listView')">
+              <span v-if="viewMode === 'list'">📅</span>
+              <span v-else>📋</span>
+            </button>
             <button class="new-article-btn" type="button" @click="goNewArticle">
               + {{ t('article.new') }}
             </button>
@@ -212,8 +250,8 @@ const toggleSort = () => {
           </div>
         </div>
         
-        <!-- 文章列表 -->
-        <div class="articles">
+        <!-- 文章列表视图 -->
+        <div v-if="viewMode === 'list'" class="articles">
           <article
             v-for="item in paginatedArticles"
             :key="item.id"
@@ -267,8 +305,67 @@ const toggleSort = () => {
           </div>
         </div>
 
-        <!-- 分页控件 -->
+        <!-- 时间轴视图 -->
+        <div v-else class="timeline-view">
+          <div class="timeline-container">
+            <div class="timeline-line"></div>
+            <div
+              v-for="yearGroup in articlesByYear"
+              :key="yearGroup.year"
+              class="timeline-year-group"
+            >
+              <!-- 年份节点 -->
+              <div class="timeline-year-node">
+                <div class="year-circle">{{ yearGroup.year }}</div>
+              </div>
+              <!-- 该年份的文章列表 -->
+              <div class="timeline-articles">
+                <article
+                  v-for="item in yearGroup.articles"
+                  :key="item.id"
+                  class="timeline-article"
+                  role="button"
+                  tabindex="0"
+                  @click="goDetail(item.id)"
+                  @keyup.enter="goDetail(item.id)"
+                >
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <div class="timeline-thumbnail" :style="getCoverStyle(item.cover)">
+                      <span v-if="item.badge" class="timeline-badge">{{ item.badge }}</span>
+                    </div>
+                    <div class="timeline-info">
+                      <div class="timeline-date">
+                        <span class="date-icon">📅</span>
+                        <span>{{ item.date }}</span>
+                        <template v-if="item.updatedDate && item.updatedDate !== item.date">
+                          <span class="date-separator">·</span>
+                          <span class="updated-date">{{ t('article.updated') }}: {{ item.updatedDate }}</span>
+                        </template>
+                      </div>
+                      <h3
+                        class="timeline-title"
+                        v-html="(item as any).highlightedTitle || item.title"
+                      ></h3>
+                      <p
+                        v-if="item.description"
+                        class="timeline-description"
+                        v-html="(item as any).highlightedDescription || item.description"
+                      ></p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+          <div v-if="filteredArticles.length === 0" class="empty-state">
+            <p>{{ t('search.noResults') }}</p>
+          </div>
+        </div>
+
+        <!-- 分页控件（仅列表视图显示） -->
         <Pagination
+          v-if="viewMode === 'list'"
           v-model:current-page="currentPage"
           v-model:items-per-page="itemsPerPage"
           :total-pages="totalPages"
@@ -372,6 +469,27 @@ const toggleSort = () => {
   display: flex;
   gap: 12px;
   align-items: center;
+}
+
+.view-toggle-btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+}
+
+.view-toggle-btn:hover {
+  background: var(--surface-2);
+  border-color: var(--brand);
+  transform: scale(1.05);
 }
 
 .new-article-btn {
@@ -620,6 +738,180 @@ const toggleSort = () => {
   color: var(--text-subtle);
 }
 
+/* 时间轴视图样式 */
+.timeline-view {
+  position: relative;
+  padding: 20px 0;
+}
+
+.timeline-container {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.timeline-year-group {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.timeline-year-node {
+  position: absolute;
+  left: -40px;
+  top: 0;
+  z-index: 2;
+}
+
+.year-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 3px solid var(--bg);
+}
+
+.timeline-articles {
+  margin-left: 20px;
+  padding-top: 10px;
+}
+
+.timeline-article {
+  position: relative;
+  margin-bottom: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.timeline-article:hover {
+  transform: translateX(8px);
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -30px;
+  top: 20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: 2px solid var(--bg);
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.timeline-article:hover .timeline-dot {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 20%, transparent);
+}
+
+.timeline-content {
+  display: flex;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.timeline-article:hover .timeline-content {
+  border-color: var(--brand);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-thumbnail {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface), #ffffff 40%);
+  color: var(--text-primary);
+  font-size: 10px;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+}
+
+.timeline-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-subtle);
+  font-size: 13px;
+}
+
+.date-icon {
+  font-size: 14px;
+}
+
+.date-separator {
+  margin: 0 4px;
+  color: var(--text-subtle);
+}
+
+.updated-date {
+  color: var(--brand);
+}
+
+.timeline-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.timeline-article:hover .timeline-title {
+  color: var(--brand);
+}
+
+.timeline-description {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 @media (max-width: 1024px) {
   .article-card {
     grid-template-columns: 1fr;
@@ -627,6 +919,32 @@ const toggleSort = () => {
 
   .article-card .card-body {
     padding: 18px 20px 20px;
+  }
+
+  .timeline-container {
+    padding-left: 30px;
+  }
+
+  .timeline-year-node {
+    left: -30px;
+  }
+
+  .year-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .timeline-dot {
+    left: -22px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .timeline-thumbnail {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
   }
 }
 </style>

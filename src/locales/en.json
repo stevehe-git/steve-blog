@@ -64,7 +64,9 @@
     }
   },
   "actions": {
-    "sortByTime": "Sort by time"
+    "sortByTime": "Sort by time",
+    "listView": "List view",
+    "timelineView": "Timeline view"
   },
   "meta": {
     "readOnWechat": "Read on WeChat"

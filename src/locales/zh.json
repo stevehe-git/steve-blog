@@ -64,7 +64,9 @@
     }
   },
   "actions": {
-    "sortByTime": "时间排序"
+    "sortByTime": "时间排序",
+    "listView": "列表视图",
+    "timelineView": "时间轴视图"
   },
   "meta": {
     "readOnWechat": "微信阅读"
