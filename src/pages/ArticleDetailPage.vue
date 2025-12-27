@@ -112,6 +112,13 @@ const handleCommentSubmit = (form: { author: string; content: string }) => {
   addComment(article.value.id, form)
 }
 
+/**
+ * 退出阅读模式
+ */
+const exitReadingMode = () => {
+  appStore.toggleReadingMode()
+}
+
 // 组件挂载时加载评论数据
 onMounted(() => {
   loadComments()
@@ -120,6 +127,18 @@ onMounted(() => {
 
 <template>
   <main class="layout detail-layout">
+    <!-- 阅读模式退出按钮 -->
+    <button
+      v-if="appStore.readingMode"
+      class="exit-reading-mode-btn"
+      type="button"
+      @click="exitReadingMode"
+      :aria-label="t('article.exitReadingMode')"
+    >
+      <span class="exit-icon">✕</span>
+      <span class="exit-text">{{ t('article.exitReadingMode') }}</span>
+    </button>
+
     <ArticleHeader :article="article" @go-back="goBack" @edit="goEdit" />
 
     <section class="article-area">
@@ -191,6 +210,59 @@ onMounted(() => {
   background: var(--surface);
   justify-content: center;
   text-align: center;
+}
+
+.exit-reading-mode-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.exit-reading-mode-btn:hover {
+  background: var(--surface-2);
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.exit-reading-mode-btn:active {
+  transform: translateY(0);
+}
+
+.exit-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.exit-text {
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .exit-reading-mode-btn {
+    top: 16px;
+    right: 16px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .exit-icon {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 1024px) {

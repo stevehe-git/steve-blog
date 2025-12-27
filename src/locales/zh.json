@@ -146,6 +146,7 @@
     "notFound": "未找到该文章",
     "notFoundDesc": "请返回列表重试",
     "back": "返回",
+    "exitReadingMode": "退出阅读模式",
     "prevArticle": "上一篇",
     "nextArticle": "下一篇"
   },

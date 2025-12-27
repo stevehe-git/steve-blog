@@ -146,6 +146,7 @@
     "notFound": "Article not found",
     "notFoundDesc": "Please return to the list and try again",
     "back": "Back",
+    "exitReadingMode": "Exit Reading Mode",
     "prevArticle": "Previous",
     "nextArticle": "Next"
   },
