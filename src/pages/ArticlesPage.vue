@@ -21,6 +21,27 @@ const { categories } = useCategories(true)
 
 // 当前选中的分类（默认为"全部"）
 const selectedCategory = ref('all')
+
+/**
+ * 计算每个分类下的文章数量
+ */
+const categoryCounts = computed(() => {
+  const counts: Record<string, number> = {}
+  
+  // 计算"全部"分类的数量
+  counts.all = articles.length
+  
+  // 计算每个分类的数量
+  categories.value.forEach((category) => {
+    if (category.key !== 'all') {
+      counts[category.key] = articles.filter(
+        (article) => article.categoryKey === category.key
+      ).length
+    }
+  })
+  
+  return counts
+})
 // 排序方向（true: 降序，false: 升序）
 const sortDesc = ref(true)
 
@@ -145,7 +166,8 @@ const toggleSort = () => {
             type="button"
             @click="selectedCategory = category.key; resetPage()"
           >
-            {{ category.label }}
+            <span class="category-label">{{ category.label }}</span>
+            <span class="category-count">({{ categoryCounts[category.key] || 0 }})</span>
           </button>
         </div>
       </aside>
