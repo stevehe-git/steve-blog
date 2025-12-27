@@ -53,7 +53,20 @@ const itemsPerPage = ref(5) // 每页显示的文章数量，默认5个
 const currentPage = ref(1) // 当前页码
 
 // 视图模式：'list' 列表视图，'timeline' 时间轴视图
-const viewMode = ref<'list' | 'timeline'>('list')
+// 从 localStorage 读取保存的视图模式，默认为 'list'
+const getStoredViewMode = (): 'list' | 'timeline' => {
+  try {
+    const stored = localStorage.getItem('articleViewMode')
+    if (stored === 'list' || stored === 'timeline') {
+      return stored
+    }
+  } catch (error) {
+    console.warn('Failed to read view mode from localStorage:', error)
+  }
+  return 'list'
+}
+
+const viewMode = ref<'list' | 'timeline'>(getStoredViewMode())
 
 /**
  * 跳转到文章详情页
@@ -156,6 +169,15 @@ const toggleViewMode = () => {
   viewMode.value = viewMode.value === 'list' ? 'timeline' : 'list'
   resetPage()
 }
+
+// 监听视图模式变化，保存到 localStorage
+watch(viewMode, (newMode) => {
+  try {
+    localStorage.setItem('articleViewMode', newMode)
+  } catch (error) {
+    console.warn('Failed to save view mode to localStorage:', error)
+  }
+})
 
 /**
  * 按年份分组的文章列表（用于时间轴视图）
