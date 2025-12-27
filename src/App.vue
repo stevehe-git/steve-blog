@@ -8,6 +8,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from './store/modules/app'
+import FloatingActionButtons from './components/FloatingActionButtons.vue'
 
 // 国际化相关
 const { locale, t } = useI18n()
@@ -65,5 +66,8 @@ const toggleLocale = () => {
     </header>
 
     <RouterView />
+
+    <!-- 悬浮操作按钮 -->
+    <FloatingActionButtons />
   </div>
 </template>
