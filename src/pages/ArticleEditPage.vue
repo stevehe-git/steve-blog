@@ -222,14 +222,14 @@ const handleSubmit = async () => {
       // 更新成功，重新加载文章列表以确保数据同步
       const { reloadArticles } = await import('@/data')
       await reloadArticles()
-      // 跳转到文章详情页（ID 现在是基于文件名生成的稳定 ID）
-      router.push({ name: 'articleDetail', params: { id: articleId.value } })
+      // 跳转到文章列表页
+      router.push({ name: 'articles' })
     }
   } else {
     // 新建模式：发布 Markdown 文件
     const success = await handlePublish()
     if (success) {
-      // 发布成功，跳转到文章列表
+      // 发布成功，跳转到文章列表页
       router.push({ name: 'articles' })
     }
   }
