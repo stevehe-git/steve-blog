@@ -38,6 +38,12 @@ export function articleToMarkdown(article: Article): string {
     frontmatter.push(`date: ${escapeYamlValue(article.date)}`)
   }
   
+  // 如果有更新日期，则写入（无论是否与创建日期相同）
+  // 这样可以记录文章的更新时间，即使与创建日期相同
+  if (article.updatedDate) {
+    frontmatter.push(`updatedDate: ${escapeYamlValue(article.updatedDate)}`)
+  }
+  
   if (article.platform) {
     frontmatter.push(`platform: ${escapeYamlValue(article.platform)}`)
   }

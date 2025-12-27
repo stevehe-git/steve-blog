@@ -60,6 +60,14 @@ export function markdownToArticle(
     return new Date().toISOString().split('T')[0] as string
   }
   const date: string = getDate()
+  // 获取更新时间（可选）
+  const getUpdatedDate = (): string | undefined => {
+    if (frontmatter.updatedDate && typeof frontmatter.updatedDate === 'string') {
+      return frontmatter.updatedDate
+    }
+    return undefined
+  }
+  const updatedDate: string | undefined = getUpdatedDate()
   const description =
     frontmatter.description || extractDescription(content) || ''
   // 如果 frontmatter 中没有 categoryKey，使用第一个分类作为默认值
@@ -87,6 +95,7 @@ export function markdownToArticle(
     tag,
     badge,
     date,
+    updatedDate,
     platform,
     cover
   }

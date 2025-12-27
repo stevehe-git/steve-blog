@@ -24,7 +24,11 @@ const { t } = useI18n()
       <span class="badge" v-if="article.badge">{{ article.badge }}</span>
       <h1>{{ article.title }}</h1>
       <p class="meta">
-        <span>{{ article.date }}</span>
+        <span>{{ t('article.created') }}: {{ article.date }}</span>
+        <template v-if="article.updatedDate">
+          <span class="dot">·</span>
+          <span>{{ t('article.updated') }}: {{ article.updatedDate }}</span>
+        </template>
         <span class="dot">·</span>
         <span>{{ article.platform }}</span>
         <span class="dot">·</span>

@@ -248,8 +248,13 @@ const toggleSort = () => {
               ></p>
               <!-- 文章元信息 -->
               <div class="meta">
-                <!-- 文章日期 -->
-                <span>{{ item.date }}</span>
+                <!-- 创建日期 -->
+                <span>{{ t('article.created') }}: {{ item.date }}</span>
+                <!-- 更新时间（如果存在） -->
+                <template v-if="item.updatedDate">
+                  <span class="dot">·</span>
+                  <span>{{ t('article.updated') }}: {{ item.updatedDate }}</span>
+                </template>
                 <!-- 点分隔符 -->
                 <span class="dot">·</span>
                 <!-- 文章平台 -->

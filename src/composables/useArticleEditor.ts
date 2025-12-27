@@ -101,6 +101,7 @@ export const useArticleEditor = () => {
     tag: '',
     badge: '',
     date: new Date().toISOString().split('T')[0],
+    updatedDate: undefined,
     platform: 'Wechat',
     cover: 'linear-gradient(135deg, #0a0f26 0%, #0c1a4d 35%, #032c5f 65%, #0c1a4d 100%)'
   })
@@ -116,6 +117,7 @@ export const useArticleEditor = () => {
     form.tag = ''
     form.badge = ''
     form.date = new Date().toISOString().split('T')[0]
+    form.updatedDate = undefined
     form.platform = 'Wechat'
     form.cover = 'linear-gradient(135deg, #0a0f26 0%, #0c1a4d 35%, #032c5f 65%, #0c1a4d 100%)'
   }
@@ -142,6 +144,7 @@ export const useArticleEditor = () => {
     form.tag = article.tag
     form.badge = article.badge
     form.date = article.date
+    form.updatedDate = article.updatedDate
     form.platform = article.platform
     form.cover = article.cover
   }
@@ -202,6 +205,7 @@ export const useArticleEditor = () => {
       tag: form.tag || '',
       badge: form.badge,
       date: (form.date || new Date().toISOString().split('T')[0]) as string,
+      updatedDate: form.updatedDate,
       platform: (form.platform || 'Wechat') as string,
       cover: form.cover || ''
     }
@@ -245,6 +249,7 @@ export const useArticleEditor = () => {
         tag: form.tag || '',
         badge: form.badge,
         date: (form.date || new Date().toISOString().split('T')[0]) as string,
+        updatedDate: form.updatedDate,
         platform: (form.platform || 'Wechat') as string,
         cover: form.cover || ''
       }
@@ -322,6 +327,9 @@ export const useArticleEditor = () => {
 
     isSavingFile.value = true
     try {
+      // 编辑模式下，自动使用系统当前时间作为更新时间
+      const currentDate = new Date().toISOString().split('T')[0]
+      
       const article: Article = {
         id: form.id,
         title: form.title || '',
@@ -331,6 +339,7 @@ export const useArticleEditor = () => {
         tag: form.tag || '',
         badge: form.badge,
         date: (form.date || new Date().toISOString().split('T')[0]) as string,
+        updatedDate: currentDate, // 自动使用系统当前时间
         platform: (form.platform || 'Wechat') as string,
         cover: form.cover || ''
       }

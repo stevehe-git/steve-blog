@@ -144,7 +144,11 @@ watch(() => appStore.isDark, () => {
       <h2 class="title">{{ article.title }}</h2>
       <p class="description">{{ article.description }}</p>
       <div class="meta">
-        <span>{{ article.date }}</span>
+        <span>{{ t('article.created') }}: {{ article.date }}</span>
+        <template v-if="article.updatedDate">
+          <span class="dot">·</span>
+          <span>{{ t('article.updated') }}: {{ article.updatedDate }}</span>
+        </template>
         <span class="dot">·</span>
         <span>{{ article.platform }}</span>
         <span class="dot">·</span>
