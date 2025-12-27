@@ -1,12 +1,12 @@
 ---
-title: 示例文章
+title: markdown格式使用
 description: 这是一篇示例文章，展示如何使用 Markdown 文件
 categoryKey: Markdown
 tag: Markdown示例,样式
 badge: Markdown
 date: 2025-12-16
 platform: Wechat
-cover: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
 ---
 
 # 示例文章
@@ -53,4 +53,3 @@ graph TD
 1. 文件必须使用 `.md` 扩展名
 2. Frontmatter 是可选的，但建议包含 `title` 和 `date`
 3. 如果没有 frontmatter，系统会尝试从文件名提取信息
-

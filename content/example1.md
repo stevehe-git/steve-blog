@@ -1,3 +1,14 @@
+---
+title: Markdown保存文件格式
+description: 此目录用于存放 Markdown 格式的文章文件。项目会自动读取此目录下的所有 .md 文件并转换为文章。
+categoryKey: markdown
+tag: Markdown、文件格式
+badge: markdown
+date: 2025-12-27
+platform: Wechat
+cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+---
+
 # Content 目录
 
 此目录用于存放 Markdown 格式的文章文件。项目会自动读取此目录下的所有 `.md` 文件并转换为文章。

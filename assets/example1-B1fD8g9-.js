@@ -1,4 +1,15 @@
-const n=`# Content 目录
+const n=`---
+title: Markdown保存文件格式
+description: 此目录用于存放 Markdown 格式的文章文件。项目会自动读取此目录下的所有 .md 文件并转换为文章。
+categoryKey: markdown
+tag: Markdown、文件格式
+badge: markdown
+date: 2025-12-27
+platform: Wechat
+cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+---
+
+# Content 目录
 
 此目录用于存放 Markdown 格式的文章文件。项目会自动读取此目录下的所有 \`.md\` 文件并转换为文章。
 
@@ -98,5 +109,4 @@ grep -r "你的文章标题" dist/
 3. 如果没有 frontmatter，系统会尝试从文件名提取信息
 4. 文章会按日期自动排序（最新的在前）
 5. Markdown 文件中的文章优先级高于默认文章和 localStorage 中的文章
-6. **构建时文件会被打包**：修改 Markdown 文件后需要重新构建才能看到更新
-`;export{n as default};
+6. **构建时文件会被打包**：修改 Markdown 文件后需要重新构建才能看到更新`;export{n as default};
