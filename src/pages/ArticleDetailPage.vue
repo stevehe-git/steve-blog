@@ -7,6 +7,7 @@
 import { computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useAppStore } from '@/store/modules/app'
 import { articles, getArticleById } from '@/data'
 import { useArticleMarkdown } from '@/composables/useArticleMarkdown'
 import { useArticleComments } from '@/composables/useArticleComments'
@@ -18,6 +19,7 @@ import CommentSection from '@/components/article/CommentSection.vue'
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const appStore = useAppStore()
 
 // 评论管理
 const { loadComments, getComments, addComment } = useArticleComments()
@@ -121,7 +123,7 @@ onMounted(() => {
     <ArticleHeader :article="article" @go-back="goBack" @edit="goEdit" />
 
     <section class="article-area">
-      <div class="detail-grid" v-if="article">
+      <div class="detail-grid" :class="`layout-${appStore.articleLayout}`" v-if="article">
         <div class="content-wrapper">
           <ArticleContent
             :article="article"
@@ -165,6 +167,20 @@ onMounted(() => {
   align-items: start;
 }
 
+/* 单栏布局：隐藏 TOC */
+.detail-grid.layout-single {
+  grid-template-columns: 1fr;
+}
+
+.detail-grid.layout-single .toc {
+  display: none;
+}
+
+/* 双栏布局：显示 TOC */
+.detail-grid.layout-double {
+  grid-template-columns: 1fr 240px;
+}
+
 .content-wrapper {
   display: flex;
   flex-direction: column;
@@ -179,6 +195,10 @@ onMounted(() => {
 
 @media (max-width: 1024px) {
   .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-grid.layout-double {
     grid-template-columns: 1fr;
   }
 }

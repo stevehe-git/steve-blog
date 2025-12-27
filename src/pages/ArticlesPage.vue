@@ -10,12 +10,14 @@ import { useRouter } from 'vue-router'
 import { articles } from '@/data'
 import { useArticleSearch } from '@/composables/useArticleSearch'
 import { useCategories } from '@/composables/useCategories'
+import { useAppStore } from '@/store/modules/app'
 import Pagination from '@/components/Pagination.vue'
 import TimelineView from '@/components/TimelineView.vue'
 import ArticleListView from '@/components/ArticleListView.vue'
 
 const { t } = useI18n()
 const router = useRouter()
+const appStore = useAppStore()
 
 // 分类列表（从国际化配置动态获取，包含"全部"选项）
 const { categories } = useCategories(true)
@@ -53,21 +55,20 @@ const { searchQuery, searchResults, highlightedResults } = useArticleSearch(arti
 const itemsPerPage = ref(5) // 每页显示的文章数量，默认5个
 const currentPage = ref(1) // 当前页码
 
-// 视图模式：'list' 列表视图，'timeline' 时间轴视图
-// 从 localStorage 读取保存的视图模式，默认为 'list'
-const getStoredViewMode = (): 'list' | 'timeline' => {
-  try {
-    const stored = localStorage.getItem('articleViewMode')
-    if (stored === 'list' || stored === 'timeline') {
-      return stored
+// 视图模式：从 store 中读取
+const viewMode = computed({
+  get: () => appStore.articleViewMode,
+  set: (value) => {
+    if (value === 'list' || value === 'timeline') {
+      appStore.articleViewMode = value
+      try {
+        localStorage.setItem('articleViewMode', value)
+      } catch (error) {
+        console.warn('Failed to save view mode to localStorage:', error)
+      }
     }
-  } catch (error) {
-    console.warn('Failed to read view mode from localStorage:', error)
   }
-  return 'list'
-}
-
-const viewMode = ref<'list' | 'timeline'>(getStoredViewMode())
+})
 
 
 /**
@@ -171,17 +172,13 @@ const toggleSort = () => {
  * 切换视图模式
  */
 const toggleViewMode = () => {
-  viewMode.value = viewMode.value === 'list' ? 'timeline' : 'list'
+  appStore.toggleArticleViewMode()
   resetPage()
 }
 
-// 监听视图模式变化，保存到 localStorage
-watch(viewMode, (newMode) => {
-  try {
-    localStorage.setItem('articleViewMode', newMode)
-  } catch (error) {
-    console.warn('Failed to save view mode to localStorage:', error)
-  }
+// 监听视图模式变化，重置到第一页
+watch(() => appStore.articleViewMode, () => {
+  resetPage()
 })
 
 </script>

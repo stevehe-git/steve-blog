@@ -335,3 +335,34 @@ html.dark .content-block table th,
 html.dark .content-block table td {
   border: 1px solid #d1d5db !important;
 }
+
+/* 阅读模式样式 */
+body.reading-mode {
+  overflow: hidden;
+}
+
+body.reading-mode .page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+body.reading-mode .top-nav {
+  display: none;
+}
+
+body.reading-mode .sidebar {
+  display: none;
+}
+
+body.reading-mode .article-area {
+  width: 100%;
+}
+
+body.reading-mode .detail-grid {
+  grid-template-columns: 1fr;
+}
+
+body.reading-mode .fab-container {
+  display: none;
+}

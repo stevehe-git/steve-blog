@@ -4,11 +4,13 @@
  * 提供快速访问常用功能的悬浮按钮组
  */
 
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import { useAppStore } from '@/store/modules/app'
 
 const { locale } = useI18n()
+const route = useRoute()
 const appStore = useAppStore()
 
 // 控制按钮组是否展开
@@ -53,6 +55,33 @@ const scrollToTop = () => {
 }
 
 /**
+ * 切换文章视图模式（列表/时间轴）
+ */
+const handleViewModeToggle = () => {
+  appStore.toggleArticleViewMode()
+}
+
+/**
+ * 切换文章布局（单栏/双栏）
+ */
+const handleLayoutToggle = () => {
+  appStore.toggleArticleLayout()
+}
+
+/**
+ * 切换阅读模式
+ */
+const handleReadingModeToggle = () => {
+  appStore.toggleReadingMode()
+}
+
+// 判断是否在文章列表页
+const isArticlesPage = computed(() => route.name === 'articles')
+
+// 判断是否在文章详情页
+const isArticleDetailPage = computed(() => route.name === 'articleDetail')
+
+/**
  * 监听滚动事件，控制滚动到顶部按钮的显示
  */
 const handleScroll = () => {
@@ -94,6 +123,42 @@ onUnmounted(() => {
         @click="scrollToTop"
       >
         <span class="fab-icon">↑</span>
+      </button>
+
+      <!-- 文章布局切换按钮（仅在文章详情页显示） -->
+      <button
+        v-if="isExpanded && isArticleDetailPage"
+        key="layout"
+        class="fab-button fab-button-layout"
+        type="button"
+        :aria-label="appStore.articleLayout === 'single' ? 'Switch to double column' : 'Switch to single column'"
+        @click="handleLayoutToggle"
+      >
+        <span class="fab-icon">{{ appStore.articleLayout === 'single' ? '⫸' : '⫷' }}</span>
+      </button>
+
+      <!-- 阅读模式按钮（仅在文章详情页显示） -->
+      <button
+        v-if="isExpanded && isArticleDetailPage"
+        key="reading-mode"
+        class="fab-button fab-button-reading"
+        type="button"
+        :aria-label="appStore.readingMode ? 'Exit reading mode' : 'Enter reading mode'"
+        @click="handleReadingModeToggle"
+      >
+        <span class="fab-icon">{{ appStore.readingMode ? '📄' : '📖' }}</span>
+      </button>
+
+      <!-- 视图模式切换按钮（仅在文章列表页显示） -->
+      <button
+        v-if="isExpanded && isArticlesPage"
+        key="view-mode"
+        class="fab-button fab-button-view-mode"
+        type="button"
+        :aria-label="appStore.articleViewMode === 'list' ? 'Switch to timeline view' : 'Switch to list view'"
+        @click="handleViewModeToggle"
+      >
+        <span class="fab-icon">{{ appStore.articleViewMode === 'list' ? '📅' : '📋' }}</span>
       </button>
 
       <!-- 语言切换按钮 -->
@@ -205,6 +270,21 @@ onUnmounted(() => {
 
 .fab-button-scroll-top {
   background: #f97316;
+  color: white;
+}
+
+.fab-button-view-mode {
+  background: #3b82f6;
+  color: white;
+}
+
+.fab-button-layout {
+  background: #10b981;
+  color: white;
+}
+
+.fab-button-reading {
+  background: #8b5cf6;
   color: white;
 }
 
