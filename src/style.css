@@ -338,7 +338,8 @@ html.dark .content-block table td {
 
 /* 阅读模式样式 */
 body.reading-mode {
-  overflow: hidden;
+  /* 允许垂直滚动，只隐藏横向滚动 */
+  overflow-x: hidden;
 }
 
 body.reading-mode .page {
