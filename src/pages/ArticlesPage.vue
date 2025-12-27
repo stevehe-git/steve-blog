@@ -330,12 +330,12 @@ const toggleSort = () => {
   cursor: pointer;
   position: relative;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0) scale(1.05);
+  width: 100%;
 }
 
 /* 悬浮效果 */
 .article-card:hover {
-  transform: translateY(-8px) scale(1.08);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.15),
     0 0 0 1px color-mix(in srgb, var(--brand) 20%, transparent),
@@ -345,7 +345,7 @@ const toggleSort = () => {
 
 /* 点击效果 */
 .article-card:active {
-  transform: translateY(-4px) scale(1.06);
+  transform: translateY(-2px) scale(1.01);
   transition: all 0.15s ease;
 }
 
@@ -438,7 +438,7 @@ const toggleSort = () => {
 }
 
 .article-card .card-body {
-  padding: 18px 20px 20px 0;
+  padding: 18px 20px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
