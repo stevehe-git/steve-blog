@@ -1,4 +1,4 @@
----
+const n=`---
 title: swap增加内存
 description: swap增加内存
 categoryKey: linux
@@ -11,7 +11,7 @@ articleId: 65a71ab1-e1ce-479c-be0c-f1dd21255a1e
 ---
 
 # 本机环境
-```
+\`\`\`
 steve@steve:~$ free -h
               total        used        free      shared  buff/cache   available
 Mem:           15Gi       4.4Gi       4.5Gi       905Mi       6.6Gi       9.9Gi
@@ -20,13 +20,13 @@ steve@steve:~$ swapon --show
 NAME           TYPE      SIZE USED PRIO
 /dev/nvme0n1p2 partition 7.5G   0B   -2
 steve@steve:~$ 
-```
+\`\`\`
 有时候运行大模型或者训练的时候，运行16GB内存往往不够用，这个时候需要 扩大swap内存，不然电脑会比较卡
 
 # 扩容方案
 ## 推荐方案：保留原 swap 分区 + 新增一个 swap 文件（安全、简单、无需重分区）
 这样总 swap = 7.5G（分区） + 8.5G（文件） ≈ 16G
-```
+\`\`\`
 # 1. 创建 8.5GB 的 swap 文件（16 - 7.5 ≈ 8.5）
 sudo fallocate -l 8.5G /swapfile
 
@@ -45,11 +45,11 @@ sudo swapon /swapfile
 # 5. 验证
 free -h
 swapon --show
-```
+\`\`\`
 
 ## 可选：完全用 swap 文件替代分区（更干净）
 如果你愿意放弃 swap 分区：
-```
+\`\`\`
 # 1. 关闭现有 swap
 sudo swapoff /dev/nvme0n1p2
 
@@ -64,4 +64,4 @@ sudo nano /etc/fstab
 # 找到类似 /dev/nvme0n1p2 ... swap ... 的行，加 # 注释掉
 
 # 4. （可选）将原 swap 分区格式化为普通分区或留空
-```
+\`\`\``;export{n as default};
