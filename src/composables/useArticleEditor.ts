@@ -25,8 +25,14 @@ export type ValidationError = {
  * @returns 表单数据、提交状态和处理函数
  */
 // File System Access API 类型定义
+interface FileSystemDirectoryHandle {
+  removeEntry: (name: string) => Promise<void>
+}
+
 interface FileSystemFileHandle {
   createWritable: () => Promise<FileSystemWritableFileStream>
+  name: string
+  getParent: () => Promise<FileSystemDirectoryHandle>
 }
 
 interface FileSystemWritableFileStream extends WritableStream {
@@ -243,8 +249,6 @@ export const useArticleEditor = () => {
         cover: form.cover || ''
       }
 
-      // 转换为 Markdown
-      const markdown = articleToMarkdown(article)
       // 使用用户输入的文件名，如果没有则使用自动生成的文件名
       let defaultFilename = generateFilename(article) + '.md'
       if ((form as any).filename?.trim()) {
@@ -268,6 +272,9 @@ export const useArticleEditor = () => {
       // 获取用户实际选择的文件名
       const actualFilename = fileHandle.name
       
+      // 转换为 Markdown（包含文件名信息）
+      const markdown = articleToMarkdown(article, actualFilename)
+      
       // 写入文件
       const writable = await fileHandle.createWritable()
       await writable.write(markdown)
@@ -276,7 +283,7 @@ export const useArticleEditor = () => {
       // 基于文件名生成稳定的文章ID（与加载时使用的ID一致）
       const articleId = generateStableId(actualFilename)
       
-      // 保存文件句柄映射
+      // 保存文件句柄映射和文件名（用于删除时查找）
       fileHandleMap.set(articleId, fileHandle)
       saveFileHandle(articleId, actualFilename)
 
@@ -327,12 +334,9 @@ export const useArticleEditor = () => {
         cover: form.cover || ''
       }
 
-      // 转换为 Markdown
-      const markdown = articleToMarkdown(article)
-      const filename = generateFilename(article) + '.md'
-
       // 尝试使用已保存的文件句柄（无感触发）
       let fileHandle: FileSystemFileHandle | undefined = fileHandleMap.get(form.id)
+      let actualFilename: string
 
       // 如果没有文件句柄，提示用户选择要更新的文件
       if (!fileHandle) {
@@ -347,12 +351,15 @@ export const useArticleEditor = () => {
             multiple: false
           })
           fileHandle = fileHandles[0] as FileSystemFileHandle
+          actualFilename = fileHandle.name
           fileHandleMap.set(form.id, fileHandle)
           // 保存文件名映射
           if (savedFilename) {
             saveFileHandle(form.id, savedFilename)
           } else {
+            const filename = generateFilename(article) + '.md'
             saveFileHandle(form.id, filename)
+            actualFilename = filename
           }
         } catch (error: any) {
           if (error.name !== 'AbortError') {
@@ -360,13 +367,27 @@ export const useArticleEditor = () => {
           }
           return false
         }
+      } else {
+        // 如果有文件句柄，获取文件名
+        const savedFilename = getFileHandleName(form.id)
+        if (savedFilename) {
+          actualFilename = savedFilename
+        } else {
+          actualFilename = generateFilename(article) + '.md'
+          saveFileHandle(form.id, actualFilename)
+        }
       }
+
+      // 转换为 Markdown（包含文件名信息）
+      const markdown = articleToMarkdown(article, actualFilename)
 
       // 写入文件
       if (fileHandle) {
         const writable = await fileHandle.createWritable()
         await writable.write(markdown)
         await writable.close()
+        // 更新文件名映射（确保文件名信息是最新的）
+        saveFileHandle(form.id, actualFilename)
       } else {
         throw new Error('无法获取文件句柄')
       }

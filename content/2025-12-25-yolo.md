@@ -7,6 +7,7 @@ badge: 深度学习
 date: 2025-12-25
 platform: Wechat
 cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+filename: 2025-12-25-yolo.md
 ---
 
 # 本机环境
