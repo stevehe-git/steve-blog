@@ -309,3 +309,16 @@ button {
     font-size: 48px;
   }
 }
+
+/* 表格边框样式 - 确保在暗色主题下明显 */
+.dark .content-block table,
+html.dark .content-block table {
+  border: 2px solid #d1d5db !important;
+}
+
+.dark .content-block table th,
+.dark .content-block table td,
+html.dark .content-block table th,
+html.dark .content-block table td {
+  border: 1px solid #d1d5db !important;
+}

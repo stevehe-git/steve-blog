@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted, watch, ref } from 'vue'
+import { onMounted, watch, ref, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Article } from '@/data/types'
+import { useAppStore } from '@/store/modules/app'
 // 导入样式
 import 'highlight.js/styles/github.css'
 import 'katex/dist/katex.min.css'
@@ -13,6 +14,7 @@ import { useFlowchartRenderer } from '@/composables/useFlowchartRenderer'
 import { getCoverStyle } from '@/utils/coverStyle'
 
 const { t } = useI18n()
+const appStore = useAppStore()
 
 const props = defineProps<{
   article: Article
@@ -49,16 +51,76 @@ const initializeContent = () => {
   addCopyButtons()
   initMermaid()
   initFlowchart()
+  // 设置表格边框样式
+  updateTableBorders()
+}
+
+/**
+ * 更新表格边框样式（根据主题）
+ */
+const updateTableBorders = () => {
+  nextTick(() => {
+    if (!contentBlockRef.value) return
+    
+    const tables = contentBlockRef.value.querySelectorAll('table')
+    const isDark = appStore.isDark || document.documentElement.classList.contains('dark')
+    
+    // 获取实际的边框颜色值
+    const computedStyle = getComputedStyle(document.documentElement)
+    const lightBorderColor = computedStyle.getPropertyValue('--border').trim() || '#e5e7eb'
+    const darkBorderColor = '#d1d5db' // 更亮的灰色，在暗色主题下更明显
+    const borderColor = isDark ? darkBorderColor : lightBorderColor
+    
+    tables.forEach((table) => {
+      const tableEl = table as HTMLElement
+      // 设置表格外边框
+      tableEl.style.setProperty('border', `2px solid ${borderColor}`, 'important')
+      
+      // 设置单元格边框
+      const cells = table.querySelectorAll('th, td')
+      cells.forEach((cell) => {
+        const cellEl = cell as HTMLElement
+        cellEl.style.setProperty('border', `1px solid ${borderColor}`, 'important')
+      })
+    })
+  })
 }
 
 // 组件挂载时初始化
 onMounted(() => {
   initializeContent()
+  
+  // 监听主题变化（DOM class 变化）
+  const observer = new MutationObserver(() => {
+    updateTableBorders()
+  })
+  
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+  
+  // 延迟执行一次，确保 DOM 已渲染
+  setTimeout(() => {
+    updateTableBorders()
+  }, 100)
 })
 
 // 内容变化时重新初始化
 watch(() => props.htmlContent, () => {
   initializeContent()
+  // 延迟执行，确保内容已渲染
+  setTimeout(() => {
+    updateTableBorders()
+  }, 100)
+})
+
+// 监听主题变化
+watch(() => appStore.isDark, () => {
+  // 延迟执行，确保主题已切换
+  setTimeout(() => {
+    updateTableBorders()
+  }, 50)
 })
 </script>
 
@@ -320,10 +382,20 @@ watch(() => props.htmlContent, () => {
   width: 100% !important;
   border-collapse: collapse !important;
   margin: 12px 0 !important;
-  border: 1px solid var(--border) !important;
+  border: 2px solid var(--border) !important;
   border-radius: 8px;
   overflow: hidden;
   display: table !important;
+  background: var(--surface) !important;
+}
+
+/* 暗色主题表格边框 - 使用更明显的颜色和更强的选择器 */
+:deep(.dark .content-block table),
+.dark :deep(.content-block table),
+html.dark :deep(.content-block table),
+.dark :deep(.content-block) :deep(table) {
+  background: var(--surface-2) !important;
+  border: 2px solid #d1d5db !important;
 }
 
 :deep(.content-block table th),
@@ -334,9 +406,26 @@ watch(() => props.htmlContent, () => {
   display: table-cell !important;
 }
 
+/* 暗色主题单元格边框 - 使用更明显的颜色和更强的选择器 */
+:deep(.dark .content-block table th),
+.dark :deep(.content-block table th),
+html.dark :deep(.content-block table th),
+.dark :deep(.content-block) :deep(table th),
+:deep(.dark .content-block table td),
+.dark :deep(.content-block table td),
+html.dark :deep(.content-block table td),
+.dark :deep(.content-block) :deep(table td) {
+  border: 1px solid #d1d5db !important;
+}
+
 :deep(.content-block table th) {
   background: var(--surface) !important;
   font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+.dark :deep(.content-block table th) {
+  background: #1a1a1a !important;
   color: var(--text-primary) !important;
 }
 
@@ -345,12 +434,25 @@ watch(() => props.htmlContent, () => {
   color: var(--text-primary) !important;
 }
 
+.dark :deep(.content-block table td) {
+  background: var(--surface-2) !important;
+  color: var(--text-primary) !important;
+}
+
 :deep(.content-block table tr:nth-child(even) td) {
   background: var(--surface) !important;
 }
 
+.dark :deep(.content-block table tr:nth-child(even) td) {
+  background: #1a1a1a !important;
+}
+
 :deep(.content-block table tr:hover td) {
   background: var(--surface-2) !important;
+}
+
+.dark :deep(.content-block table tr:hover td) {
+  background: #2a2a2a !important;
 }
 
 /* Highlight.js 语法高亮样式 */
