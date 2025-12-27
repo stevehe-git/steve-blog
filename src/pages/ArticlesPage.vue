@@ -28,7 +28,7 @@ const sortDesc = ref(true)
 const { searchQuery, searchResults, highlightedResults } = useArticleSearch(articles)
 
 // 分页功能
-const itemsPerPage = ref(1) // 每页显示的文章数量
+const itemsPerPage = ref(5) // 每页显示的文章数量，默认5个
 const currentPage = ref(1) // 当前页码
 
 /**
@@ -243,7 +243,10 @@ const toggleSort = () => {
         <!-- 分页控件 -->
         <Pagination
           v-model:current-page="currentPage"
+          v-model:items-per-page="itemsPerPage"
           :total-pages="totalPages"
+          :total-items="displayArticles.length"
+          :items-per-page-options="[5, 10, 20, 50]"
         />
       </section>
     </section>
