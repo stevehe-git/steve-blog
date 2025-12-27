@@ -1,12 +1,25 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Section from '@/components/home/Section.vue'
 import SkillCategory from '@/components/home/SkillCategory.vue'
 import ProjectCard from '@/components/home/ProjectCard.vue'
 import EducationCard from '@/components/home/EducationCard.vue'
+import { articles, initializeArticles } from '@/data'
+import { useCategories } from '@/composables/useCategories'
 
 const { t } = useI18n()
+const router = useRouter()
+
+// 分类列表（不包含"全部"选项）
+const { categories } = useCategories(false)
+
+// 文章总数
+const totalArticles = computed(() => articles.length)
+
+// 分类总数
+const totalCategories = computed(() => categories.value.length)
 
 // 技能数据
 const skills = {
@@ -33,7 +46,17 @@ const experienceCount = ref(0)
 // 打字机效果
 const fullName = computed(() => t('hero.name'))
 
-onMounted(() => {
+/**
+ * 跳转到文章列表页
+ */
+const goToArticles = () => {
+  router.push({ name: 'articles' })
+}
+
+onMounted(async () => {
+  // 确保文章已加载
+  await initializeArticles()
+  
   // Hero 渐入动画
   setTimeout(() => {
     isVisible.value = true
@@ -120,6 +143,23 @@ onMounted(() => {
             <span class="icon">✉️</span>
             <span>hejiaxiong94@foxmail.com</span>
           </a>
+        </div>
+        <div class="stats-info" :class="{ visible: isVisible && !isTyping }">
+          <div class="stat-item" role="button" tabindex="0" @click="goToArticles" @keyup.enter="goToArticles">
+            <div class="stat-icon">📝</div>
+            <div class="stat-content">
+              <span class="stat-value">{{ totalArticles }}</span>
+              <span class="stat-label">{{ t('home.stats.articles') }}</span>
+            </div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item" role="button" tabindex="0" @click="goToArticles" @keyup.enter="goToArticles">
+            <div class="stat-icon">🏷️</div>
+            <div class="stat-content">
+              <span class="stat-value">{{ totalCategories }}</span>
+              <span class="stat-label">{{ t('home.stats.categories') }}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="hero-decoration">
@@ -362,6 +402,124 @@ onMounted(() => {
 
 .icon {
   font-size: 18px;
+}
+
+/* Stats Info */
+.stats-info {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
+  margin-top: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+}
+
+.stats-info.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 32px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.stat-item:hover {
+  background: var(--surface-2);
+  transform: translateY(-2px);
+}
+
+.stat-item:active {
+  transform: translateY(0);
+}
+
+.stat-item:focus {
+  outline: 2px solid var(--brand);
+  outline-offset: -2px;
+  border-radius: 20px;
+}
+
+.stat-item:first-child {
+  border-radius: 20px 0 0 20px;
+}
+
+.stat-item:last-child {
+  border-radius: 0 20px 20px 0;
+}
+
+.stat-icon {
+  font-size: 32px;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-divider {
+  width: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .stats-info {
+    max-width: 100%;
+    margin-top: 32px;
+  }
+
+  .stat-item {
+    padding: 20px 24px;
+    gap: 12px;
+  }
+
+  .stat-icon {
+    font-size: 28px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
 }
 
 /* Hero Decoration */

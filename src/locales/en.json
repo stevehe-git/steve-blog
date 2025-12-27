@@ -40,6 +40,10 @@
     "university1": "Wuhan University of Technology",
     "university2": "Wuhan Polytechnic University",
     "majorName": "Vehicle Engineering (Professional Master)",
+    "stats": {
+      "articles": "Articles",
+      "categories": "Categories"
+    },
     "project1": {
       "name": "Intelligent Material Handling Robot Project",
       "period": "2020.03-2022.06",

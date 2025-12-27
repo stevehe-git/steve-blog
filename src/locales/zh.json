@@ -40,6 +40,10 @@
     "university1": "武汉理工大学",
     "university2": "武汉轻工大学",
     "majorName": "车辆工程（专硕）",
+    "stats": {
+      "articles": "文章",
+      "categories": "分类"
+    },
     "project1": {
       "name": "智能搬运机器人项目",
       "period": "2020.03-2022.06",
