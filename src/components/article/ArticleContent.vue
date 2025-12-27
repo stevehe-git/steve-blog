@@ -3,7 +3,7 @@ import { onMounted, watch, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Article } from '@/data/types'
 // 导入样式
-import 'highlight.js/styles/github-dark.css'
+import 'highlight.js/styles/github.css'
 import 'katex/dist/katex.min.css'
 // 导入 composables
 import { useCodeCopy } from '@/composables/useCodeCopy'
@@ -364,15 +364,78 @@ watch(() => props.htmlContent, () => {
   font-size: 14px;
   line-height: 1.6;
   position: relative;
+  background: #f6f8fa !important;
+}
+
+.dark :deep(.content-block pre.hljs) {
+  background: #1e1e1e !important;
+  border-color: #333 !important;
 }
 
 :deep(.content-block pre.hljs code) {
   padding: 0;
-  background: transparent;
+  background: transparent !important;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
   display: block;
   white-space: pre;
+  color: inherit;
+}
+
+.dark :deep(.content-block pre.hljs code) {
+  color: #d4d4d4 !important;
+}
+
+/* 暗色主题下的代码高亮关键字颜色 */
+.dark :deep(.content-block pre.hljs .hljs-keyword),
+.dark :deep(.content-block pre.hljs .hljs-selector-tag),
+.dark :deep(.content-block pre.hljs .hljs-literal),
+.dark :deep(.content-block pre.hljs .hljs-title),
+.dark :deep(.content-block pre.hljs .hljs-section),
+.dark :deep(.content-block pre.hljs .hljs-doctag),
+.dark :deep(.content-block pre.hljs .hljs-type),
+.dark :deep(.content-block pre.hljs .hljs-name),
+.dark :deep(.content-block pre.hljs .hljs-strong) {
+  color: #569cd6 !important;
+}
+
+.dark :deep(.content-block pre.hljs .hljs-string),
+.dark :deep(.content-block pre.hljs .hljs-title),
+.dark :deep(.content-block pre.hljs .hljs-section),
+.dark :deep(.content-block pre.hljs .hljs-built_in),
+.dark :deep(.content-block pre.hljs .hljs-builtin-name),
+.dark :deep(.content-block pre.hljs .hljs-selector-id),
+.dark :deep(.content-block pre.hljs .hljs-selector-attr),
+.dark :deep(.content-block pre.hljs .hljs-selector-pseudo),
+.dark :deep(.content-block pre.hljs .hljs-addition),
+.dark :deep(.content-block pre.hljs .hljs-variable),
+.dark :deep(.content-block pre.hljs .hljs-template-variable),
+.dark :deep(.content-block pre.hljs .hljs-attribute),
+.dark :deep(.content-block pre.hljs .hljs-link) {
+  color: #ce9178 !important;
+}
+
+.dark :deep(.content-block pre.hljs .hljs-comment),
+.dark :deep(.content-block pre.hljs .hljs-quote),
+.dark :deep(.content-block pre.hljs .hljs-deletion),
+.dark :deep(.content-block pre.hljs .hljs-meta) {
+  color: #6a9955 !important;
+}
+
+.dark :deep(.content-block pre.hljs .hljs-number),
+.dark :deep(.content-block pre.hljs .hljs-regexp),
+.dark :deep(.content-block pre.hljs .hljs-symbol),
+.dark :deep(.content-block pre.hljs .hljs-variable),
+.dark :deep(.content-block pre.hljs .hljs-template-variable),
+.dark :deep(.content-block pre.hljs .hljs-link),
+.dark :deep(.content-block pre.hljs .hljs-selector-attr),
+.dark :deep(.content-block pre.hljs .hljs-selector-pseudo) {
+  color: #b5cea8 !important;
+}
+
+.dark :deep(.content-block pre.hljs .hljs-function),
+.dark :deep(.content-block pre.hljs .hljs-title.function_) {
+  color: #dcdcaa !important;
 }
 
 /* 复制按钮样式 */
