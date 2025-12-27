@@ -345,7 +345,7 @@ body.reading-mode {
 body.reading-mode .page {
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: 0;
 }
 
 body.reading-mode .top-nav {
@@ -358,12 +358,228 @@ body.reading-mode .sidebar {
 
 body.reading-mode .article-area {
   width: 100%;
+  padding: 0;
 }
 
 body.reading-mode .detail-grid {
   grid-template-columns: 1fr;
+  gap: 0;
 }
 
 body.reading-mode .fab-container {
   display: none;
+}
+
+/* 阅读模式下隐藏不必要的元素 */
+body.reading-mode .detail-hero .header-actions {
+  display: none;
+}
+
+body.reading-mode .detail-hero {
+  padding: 60px 24px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+body.reading-mode .detail-hero .title-area {
+  max-width: 100%;
+}
+
+body.reading-mode .detail-hero .title-area h1 {
+  font-size: 36px;
+  line-height: 1.3;
+  margin: 0 0 16px;
+  font-weight: 700;
+}
+
+body.reading-mode .detail-hero .title-area .meta {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+body.reading-mode .detail-hero .title-area .badge {
+  margin-bottom: 12px;
+}
+
+/* 阅读模式下文章内容区域 */
+body.reading-mode .content-wrapper {
+  padding: 0 24px;
+  max-width: 100%;
+}
+
+body.reading-mode .detail-card {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  gap: 0;
+}
+
+body.reading-mode .detail-card .card-cover {
+  display: none;
+}
+
+body.reading-mode .detail-card .card-body {
+  padding: 0;
+}
+
+body.reading-mode .detail-card .tag-row {
+  display: none;
+}
+
+body.reading-mode .detail-card .title {
+  display: none;
+}
+
+body.reading-mode .detail-card .description {
+  display: none;
+}
+
+body.reading-mode .detail-card .meta {
+  display: none;
+}
+
+body.reading-mode .detail-card .nav-row {
+  display: none;
+}
+
+body.reading-mode .detail-card .content-block {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+body.reading-mode .detail-card .content-block h1,
+body.reading-mode .detail-card .content-block h2,
+body.reading-mode .detail-card .content-block h3,
+body.reading-mode .detail-card .content-block h4,
+body.reading-mode .detail-card .content-block h5,
+body.reading-mode .detail-card .content-block h6 {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  scroll-margin-top: 80px;
+}
+
+body.reading-mode .detail-card .content-block h1 {
+  font-size: 32px;
+}
+
+body.reading-mode .detail-card .content-block h2 {
+  font-size: 28px;
+}
+
+body.reading-mode .detail-card .content-block h3 {
+  font-size: 24px;
+}
+
+body.reading-mode .detail-card .content-block h4 {
+  font-size: 20px;
+}
+
+body.reading-mode .detail-card .content-block h5 {
+  font-size: 18px;
+}
+
+body.reading-mode .detail-card .content-block h6 {
+  font-size: 16px;
+}
+
+body.reading-mode .detail-card .content-block p {
+  margin: 0 0 20px;
+}
+
+body.reading-mode .detail-card .content-block ul,
+body.reading-mode .detail-card .content-block ol {
+  margin: 0 0 20px;
+  padding-left: 24px;
+}
+
+body.reading-mode .detail-card .content-block li {
+  margin: 8px 0;
+}
+
+body.reading-mode .detail-card .content-block blockquote {
+  margin: 20px 0;
+  padding: 16px 20px;
+  border-left: 4px solid var(--brand);
+  background: var(--surface-2);
+  border-radius: 4px;
+}
+
+body.reading-mode .detail-card .content-block code {
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--surface-2);
+}
+
+body.reading-mode .detail-card .content-block pre {
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+body.reading-mode .detail-card .content-block img {
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+body.reading-mode .detail-card .content-block table {
+  margin: 20px 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* 阅读模式下隐藏评论区域 */
+body.reading-mode .comment-section {
+  display: none;
+}
+
+/* 阅读模式下隐藏 TOC */
+body.reading-mode .toc {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  body.reading-mode .page {
+    max-width: 100%;
+  }
+
+  body.reading-mode .detail-hero {
+    padding: 40px 16px 24px;
+  }
+
+  body.reading-mode .detail-hero .title-area h1 {
+    font-size: 28px;
+  }
+
+  body.reading-mode .content-wrapper {
+    padding: 0 16px;
+  }
+
+  body.reading-mode .detail-card .content-block {
+    font-size: 16px;
+  }
+
+  body.reading-mode .detail-card .content-block h1 {
+    font-size: 26px;
+  }
+
+  body.reading-mode .detail-card .content-block h2 {
+    font-size: 22px;
+  }
+
+  body.reading-mode .detail-card .content-block h3 {
+    font-size: 20px;
+  }
 }
