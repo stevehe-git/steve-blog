@@ -185,6 +185,7 @@ watch(viewMode, (newMode) => {
 const articlesByYear = computed(() => {
   const grouped: Record<string, typeof filteredArticles.value> = {}
   
+  // filteredArticles 已经根据 sortDesc 排序了，所以直接分组即可
   filteredArticles.value.forEach((article) => {
     const year = new Date(article.date).getFullYear().toString()
     if (!grouped[year]) {
@@ -193,12 +194,16 @@ const articlesByYear = computed(() => {
     grouped[year].push(article)
   })
   
-  // 按年份降序排序
-  const sortedYears = Object.keys(grouped).sort((a, b) => Number(b) - Number(a))
+  // 根据排序方向对年份进行排序
+  // sortDesc 为 true（降序）：最新的年份在前（2025 → 2024 → 2023...）
+  // sortDesc 为 false（升序）：最早的年份在前（2023 → 2024 → 2025...）
+  const sortedYears = Object.keys(grouped).sort((a, b) => {
+    return sortDesc.value ? Number(b) - Number(a) : Number(a) - Number(b)
+  })
   
   return sortedYears.map((year) => ({
     year,
-    articles: grouped[year]
+    articles: grouped[year] // 文章顺序已经由 filteredArticles 的排序决定
   }))
 })
 
@@ -230,8 +235,12 @@ const paginatedArticlesByYear = computed(() => {
     grouped[year].push(article)
   })
   
-  // 按年份降序排序
-  const sortedYears = Object.keys(grouped).sort((a, b) => Number(b) - Number(a))
+  // 根据排序方向对年份进行排序
+  // sortDesc 为 true（降序）：最新的年份在前
+  // sortDesc 为 false（升序）：最早的年份在前
+  const sortedYears = Object.keys(grouped).sort((a, b) => {
+    return sortDesc.value ? Number(b) - Number(a) : Number(a) - Number(b)
+  })
   
   return sortedYears.map((year) => ({
     year,
