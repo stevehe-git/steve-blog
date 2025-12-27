@@ -1,0 +1,13 @@
+const n=`---
+title: 测试
+description: 测试
+categoryKey: c/c++
+tag: 测试
+badge: 测试
+date: 2024-12-27
+platform: Wechat
+cover: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+articleId: nmhI8Z9Hss3NoJsUY8Cwy
+---
+
+测试`;export{n as default};
