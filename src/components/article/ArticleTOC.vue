@@ -12,6 +12,28 @@ defineProps<{
 }>()
 
 const { t } = useI18n()
+
+/**
+ * 处理目录项点击，滚动到对应位置并添加偏移量避免被导航栏遮挡
+ */
+const handleTocClick = (e: Event, itemId: string) => {
+  e.preventDefault()
+  const targetElement = document.getElementById(itemId)
+  if (targetElement) {
+    // 计算偏移量（导航栏高度 + 一些额外间距）
+    const offset = 100
+    const elementPosition = targetElement.getBoundingClientRect().top
+    const offsetPosition = elementPosition + window.pageYOffset - offset
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    })
+    
+    // 更新 URL hash（不触发滚动）
+    history.replaceState(null, '', `#${itemId}`)
+  }
+}
 </script>
 
 <template>
@@ -24,6 +46,7 @@ const { t } = useI18n()
         class="toc-item"
         :style="{ paddingLeft: `${(item.level - 1) * 12}px` }"
         :href="`#${item.id}`"
+        @click="handleTocClick($event, item.id)"
       >
         {{ item.text }}
       </a>

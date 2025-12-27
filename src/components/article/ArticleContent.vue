@@ -201,6 +201,8 @@ watch(() => props.htmlContent, () => {
 .content-block h6 {
   margin: 12px 0 8px;
   line-height: 1.4;
+  /* 添加滚动偏移，避免被导航栏遮挡 */
+  scroll-margin-top: 100px;
 }
 
 .content-block h1 {
