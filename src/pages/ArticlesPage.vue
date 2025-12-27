@@ -179,6 +179,43 @@ const articlesByYear = computed(() => {
     articles: grouped[year]
   }))
 })
+
+/**
+ * 时间轴视图分页后的文章列表
+ * 将所有年份的文章展平，然后进行分页
+ */
+const paginatedArticlesByYear = computed(() => {
+  // 将所有年份的文章展平
+  const allArticles = articlesByYear.value.flatMap((yearGroup) =>
+    (yearGroup.articles || []).map((article) => ({
+      ...article,
+      year: yearGroup.year
+    }))
+  )
+  
+  // 应用分页
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  const paginated = allArticles.slice(start, end)
+  
+  // 重新按年份分组
+  const grouped: Record<string, typeof paginated> = {}
+  paginated.forEach((article) => {
+    const year = (article as any).year
+    if (!grouped[year]) {
+      grouped[year] = []
+    }
+    grouped[year].push(article)
+  })
+  
+  // 按年份降序排序
+  const sortedYears = Object.keys(grouped).sort((a, b) => Number(b) - Number(a))
+  
+  return sortedYears.map((year) => ({
+    year,
+    articles: grouped[year] || []
+  }))
+})
 </script>
 
 <template>
@@ -310,7 +347,7 @@ const articlesByYear = computed(() => {
           <div class="timeline-container">
             <div class="timeline-line"></div>
             <div
-              v-for="yearGroup in articlesByYear"
+              v-for="yearGroup in paginatedArticlesByYear"
               :key="yearGroup.year"
               class="timeline-year-group"
             >
@@ -363,9 +400,8 @@ const articlesByYear = computed(() => {
           </div>
         </div>
 
-        <!-- 分页控件（仅列表视图显示） -->
+        <!-- 分页控件 -->
         <Pagination
-          v-if="viewMode === 'list'"
           v-model:current-page="currentPage"
           v-model:items-per-page="itemsPerPage"
           :total-pages="totalPages"
