@@ -41,8 +41,8 @@ const { addCopyButtons } = useCodeCopy(contentBlockRef, (key: string) => {
   }
   return translations[key] || key
 })
-const { initMermaid } = useMermaidRenderer(contentBlockRef)
-const { initFlowchart } = useFlowchartRenderer(contentBlockRef)
+const { initMermaid, rerenderMermaid } = useMermaidRenderer(contentBlockRef)
+const { initFlowchart, rerenderFlowchart } = useFlowchartRenderer(contentBlockRef)
 
 /**
  * 初始化所有内容渲染功能
@@ -93,6 +93,11 @@ onMounted(() => {
   // 监听主题变化（DOM class 变化）
   const observer = new MutationObserver(() => {
     updateTableBorders()
+    // 延迟重新渲染 Mermaid 和 Flowchart 图表，确保主题类已应用
+    setTimeout(() => {
+      rerenderMermaid()
+      rerenderFlowchart()
+    }, 100)
   })
   
   observer.observe(document.documentElement, {
@@ -120,7 +125,10 @@ watch(() => appStore.isDark, () => {
   // 延迟执行，确保主题已切换
   setTimeout(() => {
     updateTableBorders()
-  }, 50)
+    // 重新渲染 Mermaid 和 Flowchart 图表
+    rerenderMermaid()
+    rerenderFlowchart()
+  }, 100)
 })
 </script>
 
