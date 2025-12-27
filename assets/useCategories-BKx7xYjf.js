@@ -1,1 +1,0 @@
-import{u as l,c as g}from"./vue-vendor-BdTyEF2a.js";const f=(s=!1)=>{const{t,messages:o,locale:c}=l();return{categories:g(()=>{const a=o.value[c.value]?.categories||{},r=Object.keys(a).filter(e=>s||e!=="all").map(e=>({key:e,label:t(`categories.${e}`)}));return s&&a.all?[{key:"all",label:t("categories.all")},...r.filter(e=>e.key!=="all")]:r})}};export{f as u};
