@@ -97,9 +97,20 @@ const filteredArticles = computed(() => {
   }
 
   // 排序
+  // 与时间轴视图保持一致：参照时间轴的年份排序逻辑
+  // 时间轴年份排序：sortDesc ? (b - a) : (a - b)
+  //   降序（sortDesc = true）：b - a，最新年份在前（2025 → 2024 → 2023）
+  //   升序（sortDesc = false）：a - b，最早年份在前（2023 → 2024 → 2025）
+  // 列表视图文章排序：sortDesc ? (dateB - dateA) : (dateA - dateB)
+  //   降序（sortDesc = true）：dateB - dateA，最新的在前（2025-12-27 → 2025-12-25 → 2025-12-22）
+  //   升序（sortDesc = false）：dateA - dateB，最早的在前（2025-12-22 → 2025-12-25 → 2025-12-27）
+  // 注意：升序时，时间小的（早的）应该在前，这是标准的升序逻辑
   return matched.slice().sort((a, b) => {
-    const diff = new Date(a.date).getTime() - new Date(b.date).getTime()
-    return sortDesc.value ? -diff : diff
+    const dateA = new Date(a.date).getTime()
+    const dateB = new Date(b.date).getTime()
+    // 降序（sortDesc = true）：dateB - dateA，最新的在前
+    // 升序（sortDesc = false）：dateA - dateB，最早的在前
+    return sortDesc.value ? dateB - dateA : dateA - dateB
   })
 })
 
