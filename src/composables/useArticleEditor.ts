@@ -10,6 +10,7 @@ import { nanoid } from 'nanoid'
 import type { Article } from '@/data/types'
 import { contentArticles } from '@/data/contentArticles'
 import { articleToMarkdown, generateFilename } from '@/utils/markdownExporter'
+import { generateStableId } from '@/utils/markdownLoader'
 
 /**
  * 验证错误信息类型
@@ -212,7 +213,7 @@ export const useArticleEditor = () => {
   }
 
   /**
-   * 发布文章：选择目录保存 Markdown 文件
+   * 发布文章：使用文件保存对话框保存 Markdown 文件
    * @returns 是否保存成功
    */
   const handlePublish = async (): Promise<boolean> => {
@@ -222,7 +223,7 @@ export const useArticleEditor = () => {
     }
 
     // 检查浏览器是否支持 File System Access API
-    if (!('showDirectoryPicker' in window)) {
+    if (!('showSaveFilePicker' in window)) {
       alert('您的浏览器不支持文件系统访问 API，请使用 Chrome、Edge 或 Opera 浏览器')
       return false
     }
@@ -244,24 +245,40 @@ export const useArticleEditor = () => {
 
       // 转换为 Markdown
       const markdown = articleToMarkdown(article)
-      const filename = generateFilename(article) + '.md'
+      // 使用用户输入的文件名，如果没有则使用自动生成的文件名
+      let defaultFilename = generateFilename(article) + '.md'
+      if ((form as any).filename?.trim()) {
+        let userFilename = (form as any).filename.trim()
+        // 确保文件名以 .md 结尾
+        if (!userFilename.endsWith('.md')) {
+          userFilename = userFilename + '.md'
+        }
+        defaultFilename = userFilename
+      }
 
-      // 选择目录
-      const directoryHandle = await (window as any).showDirectoryPicker()
+      // 使用文件保存对话框，用户可以在其中输入文件名
+      const fileHandle = await (window as any).showSaveFilePicker({
+        suggestedName: defaultFilename,
+        types: [{
+          description: 'Markdown files',
+          accept: { 'text/markdown': ['.md'] }
+        }]
+      })
       
-      // 创建或获取文件句柄
-      const fileHandle = await directoryHandle.getFileHandle(filename, { create: true })
+      // 获取用户实际选择的文件名
+      const actualFilename = fileHandle.name
       
       // 写入文件
       const writable = await fileHandle.createWritable()
       await writable.write(markdown)
       await writable.close()
 
-      // 如果文章已存在，保存文件句柄映射
-      if (article.id) {
-        fileHandleMap.set(article.id, fileHandle)
-        saveFileHandle(article.id, filename)
-      }
+      // 基于文件名生成稳定的文章ID（与加载时使用的ID一致）
+      const articleId = generateStableId(actualFilename)
+      
+      // 保存文件句柄映射
+      fileHandleMap.set(articleId, fileHandle)
+      saveFileHandle(articleId, actualFilename)
 
       return true
     } catch (error: any) {

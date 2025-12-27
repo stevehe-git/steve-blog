@@ -16,7 +16,7 @@ import {
  * @param filename 文件名
  * @returns 稳定的 ID
  */
-function generateStableId(filename: string): string {
+export function generateStableId(filename: string): string {
   // 移除文件扩展名
   const nameWithoutExt = filename.replace(/\.md$/, '')
   
